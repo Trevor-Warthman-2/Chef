@@ -1,13 +1,26 @@
+
+
+
+Todos:
+- Make user model, routes, a fake login and logout endpoint. Integrate user with recipes.
+- Make /recipes/me
+
+- Make sub-routes for editing Steps
+- Make sub-routes for editing ingredients
+- Make endpoints for ratings and various statistics. (Top recipes, my top recipes, etc.)
+
+
+
+
+
+
+
+
 - looks like you start it by just running `nodemon`
 used to set up swagger: https://dev.to/kabartolo/how-to-document-an-express-api-with-swagger-ui-and-jsdoc-50do#:~:text=To%20create%20a%20Swagger%20UI%20page%20for%20your%20Express%20API,%2F%2F%20app.
 
 
 
-- NEXT: made the "Recipe" collection/model and get it working. get it working in mongo probably need to write a collection
-- remember you'll probably have run build
-- add git
-
-You deleted the env file so you'll need to get the creds from auth0 again if you try that again.
 
 
 
