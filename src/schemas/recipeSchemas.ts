@@ -9,6 +9,7 @@ import { object, string, TypeOf } from 'zod';
  *      properties:
  *        title:
  *          type: string
+ *          required: true
  *        description:
  *          type: string
  *          default: ''
@@ -61,5 +62,4 @@ export type ReadRecipeRequest = TypeOf<typeof getRecipeSchema>;
  *          type: string
  *        description:
  *          type: string
- *          default: ''
  */
