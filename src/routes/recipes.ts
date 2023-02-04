@@ -10,7 +10,7 @@ const router = express.Router();
  *  post:
  *    tags:
  *    - Recipes
- *    summary: Create a Recipe
+ *    description: Create a Recipe
  *    requestBody:
  *      required: true
  *      content:
@@ -49,8 +49,75 @@ router.post('/', validateRequest({ body: createRecipeBody }), controller.createR
  *                $ref: '#/components/schemas/RecipeResponse'
  */
 router.get('/:id', validateRequest({ params: recipeParams }), controller.readRecipe);
-// router.get('/get', controller.readAll);
-// router.patch('/update/:authorId', controller.updateAuthor);
-// router.delete('/delete/:authorId', controller.deleteAuthor);
+
+/**
+ * @swagger
+ * '/recipes':
+ *    get:
+ *      tags:
+ *      - Recipes
+ *      description: Get Recipes
+ *      responses:
+ *        200:
+ *          description: Retrieved Recipe
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/RecipeResponse'
+ */
+router.get('/', controller.readAllRecipes);
+
+/**
+ * @swagger
+ * '/recipes/{id}':
+ *    patch:
+ *      tags:
+ *      - Recipes
+ *      description: Update a recipe
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/components/schemas/UpdateRecipeRequest"
+ *      responses:
+ *        200:
+ *          description: Updated and Retrieved
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/RecipeResponse'
+ *        304:
+ *          description: Not updated
+ */
+router.patch('/:id', controller.updateRecipe);
+
+/**
+ * @swagger
+ * '/recipes/{id}':
+ *    delete:
+ *      tags:
+ *      - Recipes
+ *      description: Delete a recipe
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      responses:
+ *        204:
+ *          description: Deleted and Retrieved
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/RecipeResponse'
+ */
+router.delete('/:id', controller.deleteRecipe);
 
 export = router;

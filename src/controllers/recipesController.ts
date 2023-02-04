@@ -19,7 +19,7 @@ const createRecipe = async (req: Request, res: Response, next: NextFunction): Pr
 
 const readRecipe = async (req: Request<RecipeParams>, res: Response, next: NextFunction): Promise<void> => {
   // const { id } : { id: string } = req.params;
-  const id : string = req.params.id;
+  const { id } = req.params;
 
   const recipe = await Recipe.findById(id);
 
@@ -32,40 +32,37 @@ const readRecipe = async (req: Request<RecipeParams>, res: Response, next: NextF
   // .then((author) => (author ? res.status(200).json({ author }) : res.status(404).json({ message: 'not found' })))
 };
 
-/* const readAll = (req: Request, res: Response, next: NextFunction) => Author.find()
-  .then((authors) => res.status(200).json({ authors }))
-  .catch((error) => res.status(500).json({ error }));
-
-const updateAuthor = (req: Request, res: Response, next: NextFunction) => {
-  const { authorId } = req.params;
-
-  return Author.findById(authorId)
-    .then((author) => {
-      if (author) {
-        author.set(req.body);
-
-        return author
-          .save()
-          .then((author) => res.status(201).json({ author }))
-          .catch((error) => res.status(500).json({ error }));
-      }
-      return res.status(404).json({ message: 'not found' });
-    })
-    .catch((error) => res.status(500).json({ error }));
+const readAllRecipes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const recipes = await Recipe.find();
+  res.status(200).json({ recipes });
 };
 
-const deleteAuthor = (req: Request, res: Response, next: NextFunction) => {
-  const { authorId } = req.params;
+const updateRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body);
+  const { id } = req.params;
 
-  return Author.findByIdAndDelete(authorId)
-    .then((author) => (author ? res.status(201).json({ author, message: 'Deleted' }) : res.status(404).json({ message: 'not found' })))
-    .catch((error) => res.status(500).json({ error }));
-}; */
+  const recipe = await Recipe.findById(id);
+  if (!recipe) {
+    res.status(404).json({ message: 'not found' });
+    return;
+  }
+  recipe.set(req.body);
+  recipe.save();
 
-/* export default {
-  createAuthor, readAuthor, readAll, updateAuthor, deleteAuthor,
-}; */
+  res.status(200).json({ recipe });
+};
+
+const deleteRecipe = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+
+  const recipe = await Recipe.findByIdAndDelete(id);
+  if (!recipe) {
+    res.status(404).json({ message: 'not found' });
+  } else {
+    res.status(204).json({ recipe });
+  }
+};
 
 export default {
-  createRecipe, readRecipe,
+  createRecipe, readRecipe, readAllRecipes, updateRecipe, deleteRecipe,
 };

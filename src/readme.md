@@ -7,6 +7,7 @@ used to set up swagger: https://dev.to/kabartolo/how-to-document-an-express-api-
 - remember you'll probably have run build
 - add git
 
+You deleted the env file so you'll need to get the creds from auth0 again if you try that again.
 
 
 

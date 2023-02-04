@@ -49,3 +49,17 @@ export const getRecipeSchema = object({
 export type RecipeParams = TypeOf<typeof recipeParams>;
 export type ReadRecipeRequest = TypeOf<typeof getRecipeSchema>;
 // https://github.com/TomDoesTech/REST-API-Tutorial-Updated/blob/main/src/schema/product.schema.ts
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    UpdateRecipeRequest:
+ *      type: object
+ *      properties:
+ *        title:
+ *          type: string
+ *        description:
+ *          type: string
+ *          default: ''
+ */
