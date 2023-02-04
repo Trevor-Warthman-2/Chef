@@ -1,0 +1,123 @@
+{
+    "env": {
+        "es2021": true
+    },
+    "extends": [
+        "airbnb",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js",".ts"]
+            }
+        }
+    },
+    "rules": {
+        "no-use-before-define": 0/*["error", {
+            "functions": false,
+            "classes": true,
+            "variables": true,
+            "allowNamedExports": true
+        }]*/,
+        "react/function-component-definition": [
+            2, 
+            {
+            "namedComponents": "arrow-function",
+            "unnamedComponents": "arrow-function"
+          }
+        ],
+        "react/jsx-filename-extension": 0,
+        "react/self-closing-comp": 2,
+        "consistent-return": 0,
+        "array-element-newline": ["error", {"minItems": 3}],
+        "array-bracket-newline": ["error", { "multiline": true }],
+        "max-len": 0,
+        "linebreak-style": 0,
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        // breaks it "@typescript-eslint/member-ordering": [true, {"order": "fields-first"}],
+        "semi": ["error", "always"],
+        "react/prop-types" : 2,
+        /* "import/no-absolute-path": 0,
+        "no-relative-import-paths/no-relative-import-paths": [
+            "warn",
+            { "allowSameFolder": true, "rootDir": "src" }
+        ]*/
+        // "no-return-assign": 
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        // "comma-dangle": ["warn", "only-multiline"],
+        "@typescript-eslint/comma-dangle": ["error", "only-multiline"/*{
+            "arrays": "never",
+            "objects": "always-multiline",
+            "imports": "never",
+            "exports": "never",
+            "functions": "never",
+        }*/],
+        // "lines-between-class-members": ["error", "never"],
+        "prefer-regex-literals": ["warn"],
+        "@typescript-eslint/no-inferrable-types": ["error", { 
+            "ignoreParameters": true,
+            "ignoreProperties": true
+        }], 
+        "@typescript-eslint/typedef": [
+            "warn",
+            {
+              "arrowParameter": true,
+              // "variableDeclaration": true,
+              "variableDeclarationIgnoreFunction": true,
+              "memberVariableDeclaration": true,
+              "objectDestructuring": true,
+              "parameter": true,
+              "propertyDeclaration": true
+            }
+        ],
+        "@typescript-eslint/array-type": ["error", { "default": "generic"}],
+        //https://typescript-eslint.io/rules/explicit-function-return-type/
+        "no-multiple-empty-lines": ["error", {"max": 1, "maxBOF": 1, "maxEOF": 1}],
+        "no-undef": "error",
+        "no-underscore-dangle": 0,
+        "@typescript-eslint/explicit-member-accessibility": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
+        "@typescript-eslint/member-delimiter-style": "warn",
+        "@typescript-eslint/no-require-imports": "warn",
+        "@typescript-eslint/no-this-alias": "error",
+        "import/prefer-default-export": "off",
+        // "import/no-default-export": 2,
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "js": "never",
+              "jsx": "never",
+              "ts": "never",
+              "tsx": "never"
+            }
+        ],
+        "prefer-destructuring": ["warn"] /* {
+            "VariableDeclarator": {
+                "array": false,
+                "object": true
+            },
+            "AssignmentExpression": {
+                "array": true,
+                "object": true
+            }
+            }, {
+            "enforceForRenamedProperties": false
+            }]
+        }*/
+    }
+  }
+  
