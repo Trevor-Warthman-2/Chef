@@ -23,10 +23,6 @@ const recipeSchema: Schema = new Schema(
   {
     timestamps: true,
   },
-  /* ,
-  {
-    versionKey: false,
-  }, */
 );
 
 const Recipe = mongoose.model<RecipeDocument>('Recipe', recipeSchema);

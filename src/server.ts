@@ -6,7 +6,6 @@ import swaggerUi from 'swagger-ui-express';
 import { HttpError } from 'http-error-classes';
 import { config } from './config/config';
 import Logging from './library/logging';
-import authorRoutes from './routes/author';
 import healthCheck from './routes/healthCheck';
 import recipeRoutes from './routes/recipes';
 
@@ -79,7 +78,6 @@ const StartServer = (): void => {
   });
 
   /** Routes */
-  router.use('/authors', authorRoutes);
   router.use('/and-his-name-is', healthCheck);
   router.use('/recipes', recipeRoutes);
 

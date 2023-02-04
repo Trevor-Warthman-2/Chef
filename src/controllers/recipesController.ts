@@ -28,8 +28,6 @@ const readRecipe = async (req: Request<RecipeParams>, res: Response, next: NextF
   }
 
   res.status(200).json({ recipe });
-
-  // .then((author) => (author ? res.status(200).json({ author }) : res.status(404).json({ message: 'not found' })))
 };
 
 const readAllRecipes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
