@@ -17,4 +17,9 @@ https://www.smashingmagazine.com/2020/08/error-handling-nodejs-error-classes/
 
 Auth: https://www.youtube.com/watch?v=QQwo4E_B0y8
 
-Uninstall and remove auth0 stuff. Delete account.
+
+
+Add authentication later.
+
+ER Chart:
+https://lucid.app/lucidchart/c8563c04-4f41-452d-91db-89c07687cfb0/edit?beaconFlowId=8994F184A6C13AFC&invitationId=inv_6cac2c9d-72d2-4aea-a020-03ea1407351f&page=0_0#

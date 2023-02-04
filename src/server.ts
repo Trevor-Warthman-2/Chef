@@ -4,40 +4,14 @@ import mongoose from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { HttpError } from 'http-error-classes';
-// import { auth } from 'express-openid-connect';
 import { config } from './config/config';
 import Logging from './library/logging';
 import authorRoutes from './routes/author';
 import healthCheck from './routes/healthCheck';
 import recipeRoutes from './routes/recipes';
-// const { auth } = require('express-openid-connect');
 
 const router = express();
-/*
-router.use(
-  auth({
-    authRequired: false,
-    auth0Logout: true,
-    issuerBaseURL: process.env.BASE_URL,
-    baseURL: process.env.ISSUER_BASE_URL,
-    clientID: process.env.BASE_URL,
-    secret: process.env.AUTH_SECRET,
-  }),
-);
 
-router.get('/', (req: Request, res: Response) => {
-  // eslint-disable-next-line dot-notation
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-}); */
-
-/* Auth 0 */
-/* const { auth } = require('express-oauth2-jwt-bearer');
-
-const checkJwt = auth({
-  audience: 'chef',
-  issuerBaseURL: `https://dev-v2nw2exkg42g10ks.us.auth0.com/`,
-});
-*/
 /* Swagger Setup */
 const swaggerDefinition = {
   openapi: '3.0.0',
