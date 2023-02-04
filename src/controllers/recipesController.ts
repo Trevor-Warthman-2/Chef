@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { NotFoundError } from 'http-error-classes';
 import Recipe from '../models/recipe';
 import { RecipeParams } from '../schemas/recipeSchemas';
+import Variant from '../models/variant';
 // import { ReadRecipeRequest } from '../schemas/recipeSchemas';
 
 const createRecipe = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -19,12 +20,12 @@ const createRecipe = async (req: Request, res: Response, next: NextFunction): Pr
 
 const readRecipe = async (req: Request<RecipeParams>, res: Response, next: NextFunction): Promise<void> => {
   // const { id } : { id: string } = req.params;
-  const { id } = req.params;
+  const { recipeId } = req.params;
 
-  const recipe = await Recipe.findById(id);
+  const recipe = await Recipe.findById(recipeId);
 
   if (!recipe) {
-    throw new NotFoundError(`no recipe found with id ${id}`);
+    throw new NotFoundError(`no recipe found with id ${recipeId}`);
   }
 
   res.status(200).json({ recipe });
@@ -37,9 +38,9 @@ const readAllRecipes = async (req: Request, res: Response, next: NextFunction): 
 
 const updateRecipe = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
-  const { id } = req.params;
+  const { recipeId } = req.params;
 
-  const recipe = await Recipe.findById(id);
+  const recipe = await Recipe.findById(recipeId);
   if (!recipe) {
     res.status(404).json({ message: 'not found' });
     return;
@@ -51,9 +52,9 @@ const updateRecipe = async (req: Request, res: Response, next: NextFunction) => 
 };
 
 const deleteRecipe = async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params;
+  const { recipeId } = req.params;
 
-  const recipe = await Recipe.findByIdAndDelete(id);
+  const recipe = await Recipe.findByIdAndDelete(recipeId);
   if (!recipe) {
     res.status(404).json({ message: 'not found' });
   } else {
@@ -61,6 +62,22 @@ const deleteRecipe = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
+/* Variants */
+
+const createVariant = async (req: Request, res: Response, next: NextFunction) => {
+  const { recipeId } = req.params;
+
+  const recipe = await Recipe.findById(recipeId);
+  if (!recipe) {
+    res.status(404).json({ message: `No Recipe with id ${recipeId} found.` });
+    return;
+  }
+  const variant = new Variant(req.body);
+  recipe.variants.push(variant);
+  await recipe.save();
+  res.status(201).json({ variant });
+};
+
 export default {
-  createRecipe, readRecipe, readAllRecipes, updateRecipe, deleteRecipe,
+  createRecipe, readRecipe, readAllRecipes, updateRecipe, deleteRecipe, createVariant,
 };

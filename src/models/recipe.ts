@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import { VariantDocument } from './variant';
 
 /* export interface IRecipe {
     title: string;
@@ -10,15 +11,19 @@ export interface IRecipeModel extends IRecipe, Document {} */
 export interface RecipeDocument {
     title: string;
     description: string;
+    variants: Array<VariantDocument>;
     createdAt: Date;
     updatedAt: Date;
-    updatedBy: string;
 }
 
 const recipeSchema: Schema = new Schema(
   {
     title: String,
     description: { type: String },
+    variants: {
+      type: Array,
+      ref: 'Variant',
+    },
   },
   {
     timestamps: true,

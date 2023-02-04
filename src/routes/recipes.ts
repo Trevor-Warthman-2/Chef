@@ -29,14 +29,14 @@ router.post('/', validateRequest({ body: createRecipeBody }), controller.createR
 
 /**
  * @swagger
- * '/recipes/{id}':
+ * '/recipes/{recipeId}':
  *    get:
  *      tags:
  *      - Recipes
  *      description: Get a recipe by id
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: recipeId
  *          type: string
  *          required: true
  *          description: mongo user id
@@ -48,7 +48,7 @@ router.post('/', validateRequest({ body: createRecipeBody }), controller.createR
  *              schema:
  *                $ref: '#/components/schemas/RecipeResponse'
  */
-router.get('/:id', validateRequest({ params: recipeParams }), controller.readRecipe);
+router.get('/:recipeId', validateRequest({ params: recipeParams }), controller.readRecipe);
 
 /**
  * @swagger
@@ -69,14 +69,14 @@ router.get('/', controller.readAllRecipes);
 
 /**
  * @swagger
- * '/recipes/{id}':
+ * '/recipes/{recipeId}':
  *    patch:
  *      tags:
  *      - Recipes
  *      description: Update a recipe
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: recipeId
  *          type: string
  *          required: true
  *          description: mongo user id
@@ -95,18 +95,18 @@ router.get('/', controller.readAllRecipes);
  *        304:
  *          description: Not updated
  */
-router.patch('/:id', controller.updateRecipe);
+router.patch('/:recipeId', controller.updateRecipe);
 
 /**
  * @swagger
- * '/recipes/{id}':
+ * '/recipes/{recipeId}':
  *    delete:
  *      tags:
  *      - Recipes
  *      description: Delete a recipe
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: recipeId
  *          type: string
  *          required: true
  *          description: mongo user id
@@ -118,6 +118,35 @@ router.patch('/:id', controller.updateRecipe);
  *              schema:
  *                $ref: '#/components/schemas/RecipeResponse'
  */
-router.delete('/:id', controller.deleteRecipe);
+router.delete('/:recipeId', controller.deleteRecipe);
+
+/**
+ * @swagger
+ * '/recipes/{recipeId}/variant':
+ *  post:
+ *    tags:
+ *    - Recipes
+ *    description: Create a Recipe Variant
+ *    parameters:
+ *      - in: path
+ *        name: recipeId
+ *        type: string
+ *        required: true
+ *        description: mongo user id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/CreateVariantRequest'
+ *    responses:
+ *      201:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/VariantResponse'
+ */
+router.post('/:recipeId/variant', controller.createVariant);
 
 export = router;

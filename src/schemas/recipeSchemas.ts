@@ -1,4 +1,7 @@
-import { object, string, TypeOf } from 'zod';
+import {
+  object, string, array, TypeOf,
+} from 'zod';
+import { createVariantBody } from './variantSchemas';
 
 /**
  * @openapi
@@ -20,6 +23,10 @@ import { object, string, TypeOf } from 'zod';
  *          type: string
  *        description:
  *          type: string
+ *        variants:
+ *          type: array
+ *          items:
+ *            $ref: '#/components/schemas/CreateVariantResponse'
  *        _id:
  *          type: string
  *        createdAt:
@@ -33,12 +40,13 @@ export const createRecipeBody = object({
     required_error: 'Title is required',
   }),
   description: string().default('').optional(),
+  variants: array(createVariantBody).optional(),
 });
 
 export type CreateRecipeRequest = TypeOf<typeof createRecipeBody>;
 
 export const recipeParams = object({
-  id: string({
+  recipeId: string({
     required_error: 'recipe id is required',
   }),
 });
@@ -63,3 +71,4 @@ export type ReadRecipeRequest = TypeOf<typeof getRecipeSchema>;
  *        description:
  *          type: string
  */
+// Make this include title and desc but NOT varients
