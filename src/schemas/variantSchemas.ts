@@ -42,7 +42,7 @@ import { createStepBody } from './stepSchemas';
  *        steps:
  *          type: array
  *          items:
- *            $ref: '#/components/schemas/CreateStepResponse'
+ *            $ref: '#/components/schemas/StepResponse'
  *        cooked:
  *          type: boolean
  *        chefsChoice:

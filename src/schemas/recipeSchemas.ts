@@ -26,7 +26,7 @@ import { createVariantBody } from './variantSchemas';
  *        variants:
  *          type: array
  *          items:
- *            $ref: '#/components/schemas/CreateVariantResponse'
+ *            $ref: '#/components/schemas/VariantResponse'
  *        _id:
  *          type: string
  *        createdAt:

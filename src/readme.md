@@ -1,4 +1,10 @@
 
+Frontend App Name:
+"Stockpot"
+"Recipe Compendium"
+"Pap-Eurika, for all your great recipe ideas"
+"Chefs Choice"
+"Recipe Vault"
 
 
 Todos:
@@ -28,7 +34,7 @@ Soureces:
 
 error hadnling:
 https://www.smashingmagazine.com/2020/08/error-handling-nodejs-error-classes/
-
+`
 Auth: https://www.youtube.com/watch?v=QQwo4E_B0y8
 
 
