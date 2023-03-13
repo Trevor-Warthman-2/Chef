@@ -71,7 +71,7 @@
             "ignoreParameters": true,
             "ignoreProperties": true
         }], 
-        "@typescript-eslint/typedef": [
+        /*"@typescript-eslint/typedef": [
             "warn",
             {
               "arrowParameter": true,
@@ -82,12 +82,13 @@
               "parameter": true,
               "propertyDeclaration": true
             }
-        ],
+        ],*/
         "@typescript-eslint/array-type": ["error", { "default": "generic"}],
         //https://typescript-eslint.io/rules/explicit-function-return-type/
         "no-multiple-empty-lines": ["error", {"max": 1, "maxBOF": 1, "maxEOF": 1}],
         "no-undef": "error",
         "no-underscore-dangle": 0,
+        "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-member-accessibility": "error",
         "@typescript-eslint/explicit-module-boundary-types": "warn",
         "@typescript-eslint/member-delimiter-style": "warn",

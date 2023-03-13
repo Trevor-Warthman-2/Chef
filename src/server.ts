@@ -1,40 +1,28 @@
 import express, { NextFunction, Request, Response } from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
-import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { HttpError } from 'http-error-classes';
 import { config } from './config/config';
 import Logging from './library/logging';
-import healthCheck from './routes/healthCheck';
-import recipeRoutes from './routes/recipes';
+import basicRoutes from './routes/basicRoutes';
+import recipeRoutes from './routes/recipeRoutes';
+import userRoutes from './routes/userRoutes';
+import AUTH_CONFIG from './config/authConfig';
+// import { OpenidRequest } from 'express-openid-connect';
+import { swaggerSpec } from './config/swaggerConfig';
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { auth } = require('express-openid-connect');
 
 const router = express();
 
-/* Swagger Setup */
-const swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'Chef API for cooking up recipes',
-    version: '1.0.0',
-    description:
-      'Chef Cooks up Recipes and Serves them out.',
-  },
-  servers: [
-    {
-      url: 'http://localhost:9090',
-      description: 'Local server',
-    },
-  ],
-};
-const options = {
-  swaggerDefinition,
-  // apis: ['./routes/*.js'],
-  apis: ['**/*.ts'],
-  // apis: ['./routes/*.ts', './schemas/*.ts']
-};
+// Authentication Config
+router.use(
+  auth(AUTH_CONFIG),
+);
 
-const swaggerSpec = swaggerJSDoc(options);
+// Swagger Config
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /** Connect to Mongo */
@@ -64,7 +52,7 @@ const StartServer = (): void => {
   router.use(express.urlencoded({ extended: true }));
   router.use(express.json());
 
-  /** Rules of our API */
+  /** API Rules */
   router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -78,7 +66,9 @@ const StartServer = (): void => {
   });
 
   /** Routes */
-  router.use('/and-his-name-is', healthCheck);
+
+  router.use('/', basicRoutes);
+  router.use('/users', userRoutes);
   router.use('/recipes', recipeRoutes);
 
   /** Error handling */

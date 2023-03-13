@@ -36,7 +36,7 @@ import { createIngredientBody } from './ingredientSchemas';
  *        ingredients:
  *          type: array
  *          items:
- *            $ref: '#/components/schemas/CreateIngredientResponse'
+ *            $ref: '#/components/schemas/IngredientResponse'
  *        _id:
  *          type: string
  *        createdAt:
