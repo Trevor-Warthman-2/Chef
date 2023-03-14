@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
+import { getUsersFavoriteVariants } from '../services/favoriteVariants';
+
 // import favoriteVariant from '../models/favoriteVariant';
 // import { favoriteVariantParams } from '../schemas/favoriteVariantSchemas';
 // import { ReadfavoriteVariantRequest } from '../schemas/favoriteVariantSchemas';
@@ -16,8 +18,12 @@ import { NextFunction, Request, Response } from 'express';
 //   res.status(201).json({ favoriteVariant });
 // };
 
-export const readAllFavoriteVariants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const readMyFavoriteVariants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   console.log('MADE IT TO CONTROLLER');
+  const { oidc }: any = req;
+  console.log(oidc.user);
+  getUsersFavoriteVariants(oidc.user.sub);
+  // Auth0ManagementClient.get('/user')
   const favoriteVariants = []; // await favoriteVariant.find();
   res.status(200).json({ favoriteVariants });
 };
@@ -34,5 +40,5 @@ export const readAllFavoriteVariants = async (req: Request, res: Response, next:
 // };
 
 export default {
-  readAllFavoriteVariants,
+  readMyFavoriteVariants,
 };

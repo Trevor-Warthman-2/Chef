@@ -1,6 +1,6 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
-import controller from '../controllers/recipesController';
+import controller from '../controllers/recipes';
 import { createRecipeBody, recipeParams } from '../schemas/recipeSchemas';
 
 const router = express.Router();

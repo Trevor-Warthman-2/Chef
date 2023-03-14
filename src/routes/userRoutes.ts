@@ -1,7 +1,7 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
 import { requiresAuth } from 'express-openid-connect';
-import favoriteVariantsController from '../controllers/favoriteVariantsController';
+import favoriteVariantsController from '../controllers/favoriteVariants';
 // import usersController from '../controllers/usersController';
 import userMay from '../middleware/authorization';
 
@@ -16,11 +16,11 @@ const router = express.Router();
  *      description: Get all of a user's favorite variant ids
  *      responses:
  *        200:
- *          description: Retrieved Recipe
+ *          description: Retrieved Favorite Variants
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
+ *                type: Array<string>
  */
 // router.get('/me', [requiresAuth(), userMay(['read:appMetaData'])], usersController.readUser);
 
@@ -53,13 +53,14 @@ const router = express.Router();
  *      description: Get all of a user's favorite variant ids
  *      responses:
  *        200:
- *          description: Retrieved Recipe
+ *          description: Retrieved Variants
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
+ *                type: Array
+ *                example: ['89nkg97fgbf9', 'dkfbdf78bfb88']
  */
-router.get('/me/favoriteVariants', [requiresAuth(), userMay(['read:favoriteVariants'])], favoriteVariantsController.readAllFavoriteVariants);
+router.get('/me/favoriteVariants', requiresAuth(), favoriteVariantsController.readMyFavoriteVariants);
 /**
  * @swagger
  * '/favoriteVariants/{id}':

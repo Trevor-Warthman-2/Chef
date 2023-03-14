@@ -98,3 +98,9 @@ Chef API:
 - Defining Permissions that users can take.
 
 
+
+I could set user metadata to return from the profile: https://auth0.com/docs/get-started/apis/scopes/sample-use-cases-scopes-and-claims#add-custom-claims-to-a-token
+
+
+ManagementClient: // https://auth0.github.io/node-auth0/ManagementClient.html
+comes configured to grab token if you provide creds so its easy.

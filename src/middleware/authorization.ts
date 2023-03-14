@@ -5,10 +5,7 @@ import { auth0ManagementApiBaseUrl } from '../config/authConfig';
 const userHasPermission = async (userId: string, permission: string) => {
   console.log(`${auth0ManagementApiBaseUrl}/users/${userId}/permissions`);
   const response = await axios.get(`${auth0ManagementApiBaseUrl}/permissions`);
-  THIS HERE IS NOT WORKING BECAUSE IN THE BROWSER/POSTMAN I CAN MANUALLY SET THE MANAGEMENT API TOKEN but here I don't have it. So I should grab it and have it. Look how to get api management token in node js. There was some sort of production link.
-  also maybe I'm doing axios wrong
-  HERE:
-  //https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-production
+  // also maybe I'm doing axios wrong
   const data = await response.data;
 
   console.log('Gotten Permissions: ', response.data);
@@ -26,3 +23,5 @@ const userMay = (permissions: Array<string>, customMessage?: string) => function
 };
 
 export default userMay;
+
+// userMay(['read:favoriteVariants'])]
