@@ -37,7 +37,6 @@ const readAllRecipes = async (req: Request, res: Response, next: NextFunction): 
 };
 
 const updateRecipe = async (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body);
   const { recipeId } = req.params;
 
   const recipe = await Recipe.findById(recipeId);

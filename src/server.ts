@@ -7,7 +7,7 @@ import { config } from './config/config';
 import Logging from './library/logging';
 import basicRoutes from './routes/basicRoutes';
 import recipeRoutes from './routes/recipeRoutes';
-import userRoutes from './routes/userRoutes';
+import userRoutes from './routes/user/userRoutes';
 import AUTH_CONFIG from './config/authConfig';
 // import { OpenidRequest } from 'express-openid-connect';
 import { swaggerSpec } from './config/swaggerConfig';

@@ -14,7 +14,7 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   const { oidc }: any = req; // Logic to prevent Typescript Erroring about OpenIdConnect's badly documented ts type OpenIdRequest. See: https://github.com/auth0/express-openid-connect/blob/master/index.d.ts
-  console.log(oidc.user.user_metadata);
+
   const status = oidc?.isAuthenticated() ? 'Logged In' : 'Logged Out';
   res.status(200).send(JSON.stringify(status));
 });

@@ -32,8 +32,8 @@ const AUTH_CONFIG = {
 
 export const auth0ManagementApiBaseUrl = process.env.AUTH0_MANAGEMENT_API_BASE_URL;
 
-// export interface OIDRequest extends Request {
-//   oidc: any;
-// }
+export interface OIDRequest extends Request {
+  oidc: any;
+}
 
 export default AUTH_CONFIG;

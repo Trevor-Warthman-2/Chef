@@ -1,28 +1,8 @@
 import express from 'express';
-import { validateRequest } from 'zod-express-middleware';
 import { requiresAuth } from 'express-openid-connect';
-import favoriteVariantsController from '../controllers/favoriteVariants';
-// import usersController from '../controllers/usersController';
-import userMay from '../middleware/authorization';
+import favoriteVariantsController from '../../../controllers/favoriteVariants';
 
 const router = express.Router();
-
-/**
- * @swagger
- * '/users/me/favoriteVariants':
- *    get:
- *      tags:
- *      - FavoriteVariants
- *      description: Get all of a user's favorite variant ids
- *      responses:
- *        200:
- *          description: Retrieved Favorite Variants
- *          content:
- *            application/json:
- *              schema:
- *                type: Array<string>
- */
-// router.get('/me', [requiresAuth(), userMay(['read:appMetaData'])], usersController.readUser);
 
 /**
  * @swagger
@@ -36,13 +16,12 @@ const router = express.Router();
  *      content:
  *        application/json:
  *          schema:
- *            type: string
- *            example: ouj7fbgs66dkfhs4
+ *            $ref: '#/components/schemas/CreateFavoriteVariantRequest'
  *    responses:
  *      201:
  *        description: Success
  */
-// router.post('/', validateRequest({ body: createRecipeBody }), controller.createRecipe);
+router.post('/me/favoriteVariants', favoriteVariantsController.createFavoriteVariant);
 
 /**
  * @swagger
@@ -63,7 +42,7 @@ const router = express.Router();
 router.get('/me/favoriteVariants', requiresAuth(), favoriteVariantsController.readMyFavoriteVariants);
 /**
  * @swagger
- * '/favoriteVariants/{id}':
+ * '/users/me/favoriteVariants/{variantId}':
  *    delete:
  *      tags:
  *      - FavoriteVariants
@@ -73,17 +52,11 @@ router.get('/me/favoriteVariants', requiresAuth(), favoriteVariantsController.re
  *          name: variantId
  *          type: string
  *          required: true
- *          description: mongo user id
+ *          description: linked variantId
  *      responses:
  *        204:
  *          description: Deleted and Retrieved
- *          content:
- *            application/json:
- *              schema:
- *                type: string
- *                example: jdfbdfi38fh47bizdfd89
  */
-// router.delete('/:recipeId', controller.deleteRecipe);
+router.delete('/me/favoriteVariants/:variantId', favoriteVariantsController.deleteFavoriteVariant);
 
 export = router;
-

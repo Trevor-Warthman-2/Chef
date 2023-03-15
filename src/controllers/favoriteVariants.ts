@@ -1,44 +1,37 @@
 import { NextFunction, Request, Response } from 'express';
-import { getUsersFavoriteVariants } from '../services/favoriteVariants';
+import { NotFoundError } from 'http-error-classes';
+import { getUsersFavoriteVariants, linkFavoriteVariant, unlinkFavoriteVariant } from '../services/favoriteVariants';
 
-// import favoriteVariant from '../models/favoriteVariant';
-// import { favoriteVariantParams } from '../schemas/favoriteVariantSchemas';
-// import { ReadfavoriteVariantRequest } from '../schemas/favoriteVariantSchemas';
+const createFavoriteVariant = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const { variantId } : { variantId: string } = req.body;
 
-// const createfavoriteVariant = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//   const { title, description } : { title: string; description: string } = req.body;
+  const savedId = await linkFavoriteVariant((req.oidc as any).user.sub, variantId);
+  res.status(201).json({ message: 'Vairant Linked!', variantId: savedId });
+};
 
-//   const favoriteVariant = new favoriteVariant({
-//     // _id: new mongoose.Types.ObjectId(),
-//     title,
-//     description,
-//   });
-
-//   await favoriteVariant.save();
-//   res.status(201).json({ favoriteVariant });
-// };
-
-export const readMyFavoriteVariants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  console.log('MADE IT TO CONTROLLER');
-  const { oidc }: any = req;
-  console.log(oidc.user);
-  getUsersFavoriteVariants(oidc.user.sub);
+const readMyFavoriteVariants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const favoriteVariants = await getUsersFavoriteVariants((req.oidc as any).user.sub);
   // Auth0ManagementClient.get('/user')
-  const favoriteVariants = []; // await favoriteVariant.find();
   res.status(200).json({ favoriteVariants });
 };
 
-// const deletefavoriteVariant = async (req: Request, res: Response, next: NextFunction) => {
-//   const { favoriteVariantId } = req.params;
+export const deleteFavoriteVariant = async (req: Request, res: Response, next: NextFunction) => {
+  const { variantId } = req.params;
+  const { oidc }: any = req;
 
-//   const favoriteVariant = await favoriteVariant.findByIdAndDelete(favoriteVariantId);
-//   if (!favoriteVariant) {
-//     res.status(404).json({ message: 'not found' });
-//   } else {
-//     res.status(204).json({ favoriteVariant });
-//   }
-// };
+  let returnedVariantId;
+  try {
+    returnedVariantId = await unlinkFavoriteVariant(oidc.user.sub, variantId);
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      res.status(404).json({ message: 'Not Found' });
+    }
+    throw error;
+  }
+
+  res.status(204).json({ message: 'Variant Unlinked!', variantId: returnedVariantId });
+};
 
 export default {
-  readMyFavoriteVariants,
+  readMyFavoriteVariants, createFavoriteVariant, deleteFavoriteVariant,
 };
