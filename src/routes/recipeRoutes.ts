@@ -146,6 +146,8 @@ router.delete('/:recipeId', controller.deleteRecipe);
  *          application/json:
  *            schema:
  *              $ref: '#/components/schemas/VariantResponse'
+ *      404:
+ *        description: recipeId not found
  */
 router.post('/:recipeId/variant', controller.createVariant);
 
