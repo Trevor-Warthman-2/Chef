@@ -3,6 +3,7 @@ import http from 'http';
 import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import { HttpError } from 'http-error-classes';
+import { auth } from 'express-openid-connect';
 import { config } from './config/config';
 import Logging from './library/logging';
 import basicRoutes from './routes/basicRoutes';
@@ -13,7 +14,6 @@ import AUTH_CONFIG from './config/authConfig';
 import { swaggerSpec } from './config/swaggerConfig';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { auth } = require('express-openid-connect');
 
 const router = express();
 

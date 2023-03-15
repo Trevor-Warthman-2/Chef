@@ -1,6 +1,5 @@
 import express from 'express';
-
-const { requiresAuth } = require('express-openid-connect');
+import { requiresAuth } from 'express-openid-connect';
 
 const router = express.Router();
 

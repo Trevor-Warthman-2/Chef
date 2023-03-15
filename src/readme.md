@@ -10,11 +10,15 @@ Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
+Consider renaming recipe to dish and variant to recipe again. 
 
+form post thing Using 'form_post' for response_mode may cause issues for you logging in over http, see https://github.com/auth0/express-openid-connect/blob/master/FAQ.md
 
-try removing requires
 - Do some more designing of database resources and plan out needs.
 - mark a way to show who has or has not voted on a variant
+
+design how saved links fit in to the schema
+create the save link endpoint. (Maybe there are “draft variants”).  But yeah posting a /dish/draftRecipe will look different based on the body. Maybe there’s just a normal one, maybe there’s one with only a link to the original that says “fill in to finalize recipe”, maybe finalized might have both. Also obviously posting recipes creates the dish.
 
 - add user id when creating a recipe 
 - or variant
