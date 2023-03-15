@@ -10,9 +10,6 @@ Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
-Consider renaming recipe to dish and variant to recipe again. 
-
-form post thing Using 'form_post' for response_mode may cause issues for you logging in over http, see https://github.com/auth0/express-openid-connect/blob/master/FAQ.md
 
 - Do some more designing of database resources and plan out needs.
 - mark a way to show who has or has not voted on a variant
@@ -56,6 +53,11 @@ Overall Plan:
       - featured recipes
         - slidebar with arrows showing idk like 6 variants
       - Filters
+
+
+
+## Later Todos
+Consider renaming recipe to dish and variant to recipe again. 
 
 
 

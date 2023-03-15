@@ -9,7 +9,6 @@ const createRecipe = async (req: Request, res: Response, next: NextFunction): Pr
   const { title, description } : { title: string; description: string } = req.body;
 
   const recipe = new Recipe({
-    // _id: new mongoose.Types.ObjectId(),
     title,
     description,
   });
