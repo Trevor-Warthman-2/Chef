@@ -16,6 +16,10 @@ import { createVariantBody } from './variantSchemas';
  *        description:
  *          type: string
  *          default: ''
+ *        variants:
+ *          type: array
+ *          items:
+ *            $ref: '#/components/schemas/CreateVariantRequest'
  *    RecipeResponse:
  *      type: object
  *      properties:
@@ -26,7 +30,7 @@ import { createVariantBody } from './variantSchemas';
  *        variants:
  *          type: array
  *          items:
- *            $ref: '#/components/schemas/VariantResponse'
+ *            type: string
  *        _id:
  *          type: string
  *        createdAt:
@@ -40,10 +44,11 @@ export const createRecipeBody = object({
     required_error: 'Title is required',
   }),
   description: string().default('').optional(),
-  variants: array(createVariantBody).optional(),
+  variants: array(createVariantBody).nonempty(),
 });
 
-export type CreateRecipeRequest = TypeOf<typeof createRecipeBody>;
+export type CreateRecipeRequestBody = TypeOf<typeof createRecipeBody>;
+// export type CreateRecipeRequest = TypeOf<typeof createRecipeBody>;
 
 export const recipeParams = object({
   recipeId: string({

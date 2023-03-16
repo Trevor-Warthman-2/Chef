@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { NotFoundError } from 'http-error-classes';
-import { getUsersFavoriteVariants, linkFavoriteVariant, unlinkFavoriteVariant } from '../services/favoriteVariants';
+import { getUsersFavoriteVariants, linkFavoriteVariant, unlinkFavoriteVariant } from '../services/favoriteVariantsService';
 
 const createFavoriteVariant = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { variantId } : { variantId: string } = req.body;

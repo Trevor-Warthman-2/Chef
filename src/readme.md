@@ -10,6 +10,9 @@ Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
+- Remove variant from recipe when delete variant
+- Get Variant creation and deleter working
+- get variant endpoint
 
 - Do some more designing of database resources and plan out needs.
 - mark a way to show who has or has not voted on a variant
@@ -25,6 +28,8 @@ create the save link endpoint. (Maybe there are “draft variants”).  But yeah
 - Make sub-routes for editing Steps
 - Make sub-routes for editing ingredients
 - Make endpoints for ratings and various statistics. (Top recipes, my top recipes, etc.)
+
+Make an error handler wrapper so I can throw errors and it responds gracefully
 
 Overall Plan:
   - Differentiate between public ratings and author ratings.

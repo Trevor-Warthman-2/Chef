@@ -1,6 +1,6 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
-import controller from '../controllers/recipes';
+import controller from '../controllers/recipesController';
 import { createRecipeBody, recipeParams } from '../schemas/recipeSchemas';
 
 const router = express.Router();
@@ -122,10 +122,10 @@ router.delete('/:recipeId', controller.deleteRecipe);
 
 /**
  * @swagger
- * '/recipes/{recipeId}/variant':
+ * '/recipes/{recipeId}/variants':
  *  post:
  *    tags:
- *    - Recipes
+ *    - Variants
  *    description: Create a Recipe Variant
  *    parameters:
  *      - in: path
@@ -149,6 +149,34 @@ router.delete('/:recipeId', controller.deleteRecipe);
  *      404:
  *        description: recipeId not found
  */
-router.post('/:recipeId/variant', controller.createVariant);
+router.post('/:recipeId/variants', controller.createVariant);
+
+/**
+ * @swagger
+ * '/variants/{variantId}':
+ *    delete:
+ *      tags:
+ *      - Variants
+ *      description: Delete a recipe's variant
+ *      parameters:
+ *        - in: path
+ *          name: recipeId
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *        - in: path
+ *          name: variantId
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      responses:
+ *        204:
+ *          description: Deleted and Retrieved
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/VariantResponse'
+ */
+router.delete('/:recipeId/variants/:variantId', controller.deleteVariant);
 
 export = router;

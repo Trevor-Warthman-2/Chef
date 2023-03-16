@@ -64,5 +64,5 @@ export const createVariantBody = object({
   authorRating: number(),
 });
 
-export type CreateRecipeRequest = TypeOf<typeof createVariantBody>;
+export type CreateVariantRequest = TypeOf<typeof createVariantBody>;
 
