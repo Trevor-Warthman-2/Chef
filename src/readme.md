@@ -10,9 +10,16 @@ Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
+- get it working with the better DocumentType
+- push
+- rename v and r to d and r. remember plurals and capitolizations.
+- make new Variant require recipeId
+- edit create variant endpont to do the something
 - Remove variant from recipe when delete variant
 - Get Variant creation and deleter working
 - get variant endpoint
+
+HOW DO I SET THE TYPE OF A MODEL? IS IT A VARIANTDOCUMENT? WHT DO THEY NOT HAVE FUCKING IDS.
 
 - Do some more designing of database resources and plan out needs.
 - mark a way to show who has or has not voted on a variant
@@ -47,6 +54,7 @@ Overall Plan:
         - average rating
         - Tags (more than small version?)
         - edit icon for author
+    - Full Page Variant will be the same component used for variants above. This one will be used more often by iteself tho, and have a link to the "fullPageRecipe" component
     - Small page variant
       - Title
       - Author and link to their recipes page ordered by rating

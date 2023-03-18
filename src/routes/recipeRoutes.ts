@@ -1,7 +1,8 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
-import controller from '../controllers/recipesController';
+import recipesController from '../controllers/recipesController';
 import { createRecipeBody, recipeParams } from '../schemas/recipeSchemas';
+import variantsController from '../controllers/variantsController';
 
 const router = express.Router();
 /**
@@ -25,7 +26,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/components/schemas/RecipeResponse'
  */
-router.post('/', validateRequest({ body: createRecipeBody }), controller.createRecipe);
+router.post('/', validateRequest({ body: createRecipeBody }), recipesController.createRecipe);
 
 /**
  * @swagger
@@ -48,7 +49,7 @@ router.post('/', validateRequest({ body: createRecipeBody }), controller.createR
  *              schema:
  *                $ref: '#/components/schemas/RecipeResponse'
  */
-router.get('/:recipeId', validateRequest({ params: recipeParams }), controller.readRecipe);
+router.get('/:recipeId', validateRequest({ params: recipeParams }), recipesController.readRecipe);
 
 /**
  * @swagger
@@ -65,7 +66,7 @@ router.get('/:recipeId', validateRequest({ params: recipeParams }), controller.r
  *              schema:
  *                $ref: '#/components/schemas/RecipeResponse'
  */
-router.get('/', controller.readAllRecipes);
+router.get('/', recipesController.readAllRecipes);
 
 /**
  * @swagger
@@ -95,7 +96,7 @@ router.get('/', controller.readAllRecipes);
  *        304:
  *          description: Not updated
  */
-router.patch('/:recipeId', controller.updateRecipe);
+router.patch('/:recipeId', recipesController.updateRecipe);
 
 /**
  * @swagger
@@ -118,7 +119,7 @@ router.patch('/:recipeId', controller.updateRecipe);
  *              schema:
  *                $ref: '#/components/schemas/RecipeResponse'
  */
-router.delete('/:recipeId', controller.deleteRecipe);
+router.delete('/:recipeId', recipesController.deleteRecipe);
 
 /**
  * @swagger
@@ -149,21 +150,16 @@ router.delete('/:recipeId', controller.deleteRecipe);
  *      404:
  *        description: recipeId not found
  */
-router.post('/:recipeId/variants', controller.createVariant);
+router.post('/:recipeId/variants', variantsController.createVariant);
 
 /**
  * @swagger
- * '/variants/{variantId}':
+ * '/recipes/variants/{variantId}':
  *    delete:
  *      tags:
  *      - Variants
  *      description: Delete a recipe's variant
  *      parameters:
- *        - in: path
- *          name: recipeId
- *          type: string
- *          required: true
- *          description: mongo user id
  *        - in: path
  *          name: variantId
  *          type: string
@@ -177,6 +173,6 @@ router.post('/:recipeId/variants', controller.createVariant);
  *              schema:
  *                $ref: '#/components/schemas/VariantResponse'
  */
-router.delete('/:recipeId/variants/:variantId', controller.deleteVariant);
+router.delete('/variants/:variantId', variantsController.deleteVariant);
 
 export = router;

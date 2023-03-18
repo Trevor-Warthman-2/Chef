@@ -1,5 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
-import { InternalServerError } from 'http-error-classes';
+import mongoose, { Schema, Types } from 'mongoose';
 import Variant, { VariantDocument } from './variant';
 
 /* export interface IRecipe {
@@ -12,7 +11,7 @@ export interface IRecipeModel extends IRecipe, Document {} */
 export interface RecipeDocument {
     title: string;
     description: string;
-    variants: Array<VariantDocument>;
+    variants: Array<Types.ObjectId>;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -34,11 +33,11 @@ const recipeSchema: Schema = new Schema(
 );
 
 // reference: https://mongoosejs.com/docs/middleware.html
-const deleteVariantRelations = async (doc): Promise<void> => {
-  await Variant.deleteMany({ _id: { $in: doc.variants } });
+const deleteVariantRelations = async (recipeDocument): Promise<void> => {
+  await Variant.deleteMany({ _id: { $in: recipeDocument.variants } });
+  // console.log(`Removed reference from Variants ${deleted.map((del) => del._id)} to Recipe ${recipeDocument._id}`);
 };
 
-recipeSchema.post('remove', deleteVariantRelations);
 recipeSchema.post('deleteOne', deleteVariantRelations);
 recipeSchema.post('findOneAndDelete', deleteVariantRelations);
 recipeSchema.post('deleteMany', deleteVariantRelations);

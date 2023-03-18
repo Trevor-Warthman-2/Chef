@@ -1,24 +1,34 @@
 import { NextFunction, Request, Response } from 'express';
-import { InternalServerError, NotFoundError } from 'http-error-classes';
+import { NotFoundError } from 'http-error-classes';
+import Variant, { VariantDocument, CreateVariantShape } from '../models/variant';
 import Recipe from '../models/recipe';
 import { CreateRecipeRequestBody, RecipeParams } from '../schemas/recipeSchemas';
-import Variant, { variantSchema } from '../models/variant';
+
 // import { ReadRecipeRequest } from '../schemas/recipeSchemas';
 
 const createRecipe = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { body } : { body: CreateRecipeRequestBody } = req;
   const { title, description, variants } = body;
 
-  const variantModels = await Variant.create(variants);
-
   const recipe = new Recipe({
     title,
     description,
-    variants: variantModels,
   });
 
-  await recipe.save();
-  res.status(201).json({ recipe });
+  const promisedVariants: Array<Promise<VariantDocument>> = [];
+  for (const variant of variants) {
+    const createVariantShape: CreateVariantShape = { ...variant, recipeId: recipe._id };
+    const createdVariant: Promise<VariantDocument> = Variant.create(createVariantShape);
+    promisedVariants.push(createdVariant);
+  }
+
+  const createdVariants = await Promise.all(promisedVariants);
+
+  createdVariants.forEach((variant) => { recipe.variants.push(variant._id); });
+
+  const savedRecipe = await recipe.save();
+
+  res.status(201).json({ savedRecipe });
 };
 
 const readRecipe = async (req: Request<RecipeParams>, res: Response, next: NextFunction): Promise<void> => {
@@ -64,43 +74,6 @@ const deleteRecipe = async (req: Request, res: Response, next: NextFunction) => 
   res.status(204).json({ recipe });
 };
 
-/* Variants */
-
-const createVariant = async (req: Request, res: Response, next: NextFunction) => {
-  const { recipeId } = req.params;
-
-  const recipe = await Recipe.findById(recipeId);
-  if (!recipe) {
-    res.status(404).json({ message: `No Recipe with id ${recipeId} found.` });
-    return;
-  }
-  const variant = new Variant(req.body);
-  recipe.variants.push(variant);
-  await recipe.save();
-
-  res.status(201).json({ variant });
-};
-
-const deleteVariant = async (req: Request, res: Response, next: NextFunction) => {
-  const { recipeId, variantId } = req.params;
-
-  // const recipe = (await Recipe.findById(recipeId));
-  const variant = await Variant.findByIdAndRemove(variantId);
-  console.log(variant);
-
-  // if (!recipe) {
-  //   res.status(404).json({ message: `Recipe with id ${recipeId} not found` });
-  // }
-
-  // console.log(recipe!.variants.id(variantId));
-  // const variant = recipe?.variants.find((variant) => variant._id === variantId));
-
-  // if (!variant) {
-  //   res.status(404).json({ message: `Recipe Variant with id ${recipeId} not found` });
-  // }
-  // res.status(204).json({ variant });
-};
-
 export default {
-  createRecipe, readRecipe, readAllRecipes, updateRecipe, deleteRecipe, createVariant, deleteVariant,
+  createRecipe, readRecipe, readAllRecipes, updateRecipe, deleteRecipe,
 };

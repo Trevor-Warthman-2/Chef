@@ -64,5 +64,11 @@ export const createVariantBody = object({
   authorRating: number(),
 });
 
-export type CreateVariantRequest = TypeOf<typeof createVariantBody>;
+export const createVariantParams = object({
+  recipeId: string({
+    required_error: 'recipe id is required',
+  }),
+});
+export type CreateVariantRequestBody = TypeOf<typeof createVariantBody>;
+export type CreateVariantRequest = TypeOf<typeof createVariantBody> & TypeOf<typeof createVariantParams>;
 
