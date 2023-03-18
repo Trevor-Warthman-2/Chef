@@ -27,6 +27,7 @@ const createRecipe = async (req: Request, res: Response, next: NextFunction): Pr
   createdVariants.forEach((variant) => { recipe.variants.push(variant._id); });
 
   const savedRecipe = await recipe.save();
+  await savedRecipe.populate('variants');
 
   res.status(201).json({ savedRecipe });
 };

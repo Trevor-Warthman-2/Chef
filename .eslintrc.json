@@ -72,18 +72,18 @@
             "ignoreParameters": true,
             "ignoreProperties": true
         }], 
-        // "@typescript-eslint/typedef": [
-        //     "warn",
-        //     {
-        //       "arrowParameter": true,
-        //       // "variableDeclaration": true,
-        //       "variableDeclarationIgnoreFunction": false,
-        //       "memberVariableDeclaration": false,
-        //       "objectDestructuring": false,
-        //       "parameter": true,
-        //       "propertyDeclaration": true
-        //     }
-        // ],
+        "@typescript-eslint/typedef": [
+            "warn",
+            {
+              "arrowParameter": true,
+              // "variableDeclaration": true,
+              "variableDeclarationIgnoreFunction": false,
+              "memberVariableDeclaration": false,
+              "objectDestructuring": false,
+              "parameter": true,
+              "propertyDeclaration": true
+            }
+        ],
         "@typescript-eslint/array-type": ["error", { "default": "generic"}],
         //https://typescript-eslint.io/rules/explicit-function-return-type/
         "no-multiple-empty-lines": ["error", {"max": 1, "maxBOF": 1, "maxEOF": 1}],

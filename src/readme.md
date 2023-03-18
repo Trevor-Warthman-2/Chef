@@ -11,6 +11,7 @@ Email Address is not unique since you can have multiple accounts.
 
 Todos:
 - get it working with the better DocumentType
+- populate upon createing document with variant
 - push
 - rename v and r to d and r. remember plurals and capitolizations.
 - make new Variant require recipeId

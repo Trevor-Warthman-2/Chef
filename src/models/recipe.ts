@@ -9,6 +9,7 @@ import Variant, { VariantDocument } from './variant';
 export interface IRecipeModel extends IRecipe, Document {} */
 
 export interface RecipeDocument {
+    _id: Types.ObjectId;
     title: string;
     description: string;
     variants: Array<Types.ObjectId>;
@@ -33,7 +34,7 @@ const recipeSchema: Schema = new Schema(
 );
 
 // reference: https://mongoosejs.com/docs/middleware.html
-const deleteVariantRelations = async (recipeDocument): Promise<void> => {
+const deleteVariantRelations = async (recipeDocument: RecipeDocument): Promise<void> => {
   await Variant.deleteMany({ _id: { $in: recipeDocument.variants } });
   // console.log(`Removed reference from Variants ${deleted.map((del) => del._id)} to Recipe ${recipeDocument._id}`);
 };

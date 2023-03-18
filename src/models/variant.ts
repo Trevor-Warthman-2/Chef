@@ -1,4 +1,5 @@
 import mongoose, { Schema, Types } from 'mongoose';
+import { NotFoundError } from 'http-error-classes';
 import Step, { StepDocument } from './step';
 import Recipe, { RecipeDocument } from './recipe';
 import { CreateVariantRequestBody } from '../schemas/variantSchemas';
@@ -42,10 +43,14 @@ export const variantSchema: Schema = new Schema(
 
 // Variant Middleware
 
-const deleteRecipeRelations = async (variantDocument): Promise<void> => {
-  const recipe = await Recipe.findById(variantDocument.recipe);
-  recipe?.variants.splice(recipe?.variants.indexOf(variantDocument.recipe), 1);
-  console.log(`Removed reference from Recipe ${variantDocument.recipe} to Variant ${variantDocument._id}`);
+const deleteRecipeRelations = async (variantDocument: VariantDocument): Promise<void> => {
+  const recipe = await Recipe.findById(variantDocument.recipeId);
+  if (!recipe) {
+    throw new NotFoundError(`Recipe with id ${variantDocument.recipeId} not found`);
+  }
+  recipe.variants.splice(recipe?.variants.indexOf(variantDocument.recipeId), 1);
+  await recipe.save();
+  console.log(`Removed reference from Recipe ${variantDocument.recipeId} to Variant ${variantDocument._id}`);
 };
 
 variantSchema.post('deleteOne', deleteRecipeRelations);
