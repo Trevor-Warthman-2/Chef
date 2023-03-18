@@ -26,9 +26,9 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: 'Chef API for cooking up recipes',
+      title: 'Chef API for cooking up dishes',
       description:
-      'Chef Cooks up Recipes and Serves them out.',
+      'Chef Cooks up Dishes and Serves them out.',
       version: "1.0.0",
     },
 

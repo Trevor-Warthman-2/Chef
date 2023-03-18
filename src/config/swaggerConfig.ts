@@ -4,10 +4,10 @@ import swaggerJSDoc from 'swagger-jsdoc';
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'Chef API for cooking up recipes',
+    title: 'Chef API for cooking up dishes',
     version: '1.0.0',
     description:
-      'Chef Cooks up Recipes and Serves them out.',
+      'Chef Cooks up Dishes and Serves them out.',
   },
   servers: [
     {

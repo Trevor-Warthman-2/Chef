@@ -7,7 +7,7 @@ import { auth } from 'express-openid-connect';
 import { config } from './config/config';
 import Logging from './library/logging';
 import basicRoutes from './routes/basicRoutes';
-import recipeRoutes from './routes/recipeRoutes';
+import dishRoutes from './routes/dishRoutes';
 import userRoutes from './routes/user/userRoutes';
 import AUTH_CONFIG from './config/authConfig';
 // import { OpenidRequest } from 'express-openid-connect';
@@ -69,7 +69,7 @@ const StartServer = (): void => {
 
   router.use('/', basicRoutes);
   router.use('/users', userRoutes);
-  router.use('/recipes', recipeRoutes);
+  router.use('/dishes', dishRoutes);
 
   /** Error handling */
   /* router.use((req, res, next) => {

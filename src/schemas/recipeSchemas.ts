@@ -1,7 +1,7 @@
 import {
-  object, string, array, TypeOf,
+  object, string, array, boolean, number, TypeOf,
 } from 'zod';
-import { createVariantBody } from './variantSchemas';
+import { createStepBody } from './stepSchemas';
 
 /**
  * @openapi
@@ -15,11 +15,17 @@ import { createVariantBody } from './variantSchemas';
  *          required: true
  *        description:
  *          type: string
- *          default: ''
- *        variants:
+ *          required: true
+ *        steps:
  *          type: array
  *          items:
- *            $ref: '#/components/schemas/CreateVariantRequest'
+ *            $ref: '#/components/schemas/CreateStepRequest'
+ *        cooked:
+ *          type: boolean
+ *        chefsChoice:
+ *          type: boolean
+ *        authorRating:
+ *          type: number
  *    RecipeResponse:
  *      type: object
  *      properties:
@@ -27,53 +33,42 @@ import { createVariantBody } from './variantSchemas';
  *          type: string
  *        description:
  *          type: string
- *        variants:
- *          type: array
- *          items:
- *            type: string
  *        _id:
  *          type: string
  *        createdAt:
  *          type: string
  *        updatedAt:
  *          type: string
+ *        steps:
+ *          type: array
+ *          items:
+ *            $ref: '#/components/schemas/StepResponse'
+ *        cooked:
+ *          type: boolean
+ *        chefsChoice:
+ *          type: boolean
+ *        authorRating:
+ *          type: number
  */
 
 export const createRecipeBody = object({
   title: string({
-    required_error: 'Title is required',
+    required_error: 'recipe title is required',
   }),
-  description: string().default('').optional(),
-  variants: array(createVariantBody).nonempty(),
+  description: string({
+    required_error: 'recipe description is required',
+  }),
+  steps: array(createStepBody),
+  cooked: boolean(),
+  chefsChoice: boolean(),
+  authorRating: number(),
 });
 
+export const createRecipeParams = object({
+  dishId: string({
+    required_error: 'dish id is required',
+  }),
+});
 export type CreateRecipeRequestBody = TypeOf<typeof createRecipeBody>;
-// export type CreateRecipeRequest = TypeOf<typeof createRecipeBody>;
+export type CreateRecipeRequest = TypeOf<typeof createRecipeBody> & TypeOf<typeof createRecipeParams>;
 
-export const recipeParams = object({
-  recipeId: string({
-    required_error: 'recipe id is required',
-  }),
-});
-
-export const getRecipeSchema = object({
-  params: recipeParams,
-});
-
-export type RecipeParams = TypeOf<typeof recipeParams>;
-export type ReadRecipeRequest = TypeOf<typeof getRecipeSchema>;
-// https://github.com/TomDoesTech/REST-API-Tutorial-Updated/blob/main/src/schema/product.schema.ts
-
-/**
- * @openapi
- * components:
- *  schemas:
- *    UpdateRecipeRequest:
- *      type: object
- *      properties:
- *        title:
- *          type: string
- *        description:
- *          type: string
- */
-// Make this include title and desc but NOT varients

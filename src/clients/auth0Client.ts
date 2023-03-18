@@ -7,9 +7,9 @@ export const createAuth0Client = (scopes: string): ManagementClient => new Manag
   scope: scopes,
 });
 
-export type FavoriteVariantIdsList = Array<string>;
+export type FavoriteRecipeIdsList = Array<string>;
 
 export type UserMetaDataSchema = {
-  favoriteVariants?: FavoriteVariantIdsList;
+  favoriteRecipes?: FavoriteRecipeIdsList;
 }
 

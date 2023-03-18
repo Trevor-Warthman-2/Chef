@@ -1,9 +1,9 @@
 import express from 'express';
-import favoriteVariantRoutes from './userMetaData/favoriteVariants';
+import favoriteRecipeRoutes from './userMetaData/favoriteRecipes';
 
 const router = express.Router();
 
-router.use('/', favoriteVariantRoutes);
+router.use('/', favoriteRecipeRoutes);
 
 export = router;
 

@@ -24,4 +24,4 @@ const userMay = (permissions: Array<string>, customMessage?: string) => function
 
 export default userMay;
 
-// userMay(['read:favoriteVariants'])]
+// userMay(['read:favoriteRecipes'])]

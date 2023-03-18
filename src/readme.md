@@ -1,53 +1,59 @@
 
 Frontend App Name:
 "Stockpot"
-"Recipe Compendium"
-"Pap-Eurika, for all your great recipe ideas"
+"Dish Compendium"
+"Pap-Eurika, for all your great dish ideas"
 "Chefs Choice"
-"Recipe Vault"
+"Dish Vault"
 
 Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
 - get it working with the better DocumentType
-- populate upon createing document with variant
+- populate upon createing document with recipe
 - push
 - rename v and r to d and r. remember plurals and capitolizations.
-- make new Variant require recipeId
-- edit create variant endpont to do the something
-- Remove variant from recipe when delete variant
-- Get Variant creation and deleter working
-- get variant endpoint
+- make new Recipe require dishId
+- edit create recipe endpont to do the something
+- Remove recipe from dish when delete recipe
+- Get Recipe creation and deleter working
+- get recipe endpoint
+
+Now that I have a proof of concept, start the frontend.
+First make a create recipe page.
+  What's a generic name for this dish? (Ex: if you're making a southwestern burger, this might be your "Cheeseburger" dish.)
+  ...Recipe stuff...
+Then make the home page with the filters
 
 HOW DO I SET THE TYPE OF A MODEL? IS IT A VARIANTDOCUMENT? WHT DO THEY NOT HAVE FUCKING IDS.
 
 - Do some more designing of database resources and plan out needs.
-- mark a way to show who has or has not voted on a variant
+- mark a way to show who has or has not voted on a recipe
 
 design how saved links fit in to the schema
-create the save link endpoint. (Maybe there are “draft variants”).  But yeah posting a /dish/draftRecipe will look different based on the body. Maybe there’s just a normal one, maybe there’s one with only a link to the original that says “fill in to finalize recipe”, maybe finalized might have both. Also obviously posting recipes creates the dish.
+create the save link endpoint. (Maybe there are “draft recipes”).  But yeah posting a /dish/draftDish will look different based on the body. Maybe there’s just a normal one, maybe there’s one with only a link to the original that says “fill in to finalize dish”, maybe finalized might have both. Also obviously posting dishes creates the dish.
 
-- add user id when creating a recipe 
-- or variant
-- Make GET /recipes/me, break into system so no repeating logic
+- add user id when creating a dish 
+- or recipe
+- Make GET /dishes/me, break into system so no repeating logic
 
 
 - Make sub-routes for editing Steps
 - Make sub-routes for editing ingredients
-- Make endpoints for ratings and various statistics. (Top recipes, my top recipes, etc.)
+- Make endpoints for ratings and various statistics. (Top dishes, my top dishes, etc.)
 
 Make an error handler wrapper so I can throw errors and it responds gracefully
 
 Overall Plan:
   - Differentiate between public ratings and author ratings.
   - Model some more frontend stuff
-    - Full page recipe
-      - Recipe name at top
+    - Full page dish
+      - Dish name at top
       - description
-      - recipes are created with one variant marked as "primary variant". Validate this. Other than labeling it "primary" don't do anything yet.
-      - duplicate button that copies the first variant and puts it in the last slot as "_ Copy"
-      - variants bar across the bottom showing all ratings on the unopened ones
+      - dishes are created with one recipe marked as "primary recipe". Validate this. Other than labeling it "primary" don't do anything yet.
+      - duplicate button that copies the first recipe and puts it in the last slot as "_ Copy"
+      - recipes bar across the bottom showing all ratings on the unopened ones
         - Probably want to show number of favorites
         - number of ratings
         - cost of ingredients?
@@ -55,23 +61,39 @@ Overall Plan:
         - average rating
         - Tags (more than small version?)
         - edit icon for author
-    - Full Page Variant will be the same component used for variants above. This one will be used more often by iteself tho, and have a link to the "fullPageRecipe" component
-    - Small page variant
+    - Full Page Recipe will be the same component used for recipes above. This one will be used more often by iteself tho, and have a link to the "fullPageDish" component
+    - Small page recipe
       - Title
-      - Author and link to their recipes page ordered by rating
+      - Author and link to their dishes page ordered by rating
       - Specific important tags DECIDE WHAT THESE ARE. Link to home page filtering by that tag.
       - Star rating
       - Cook time and icon
       - picture as entire background or cusine tag default image as backup
     - Home page
-      - featured recipes
-        - slidebar with arrows showing idk like 6 variants
+      - featured dishes
+        - slidebar with arrows showing idk like 6 recipes
       - Filters
 
+## User Experience 
+- Looking for recipe
+  - Can be logged in or out, either way you use the homepage to filter or search
+    - Filtering
+      - Dish or Recipe name
+      - Recipe Tags
+    - See list of Recipes. Those take you to individual recipe page.
+    - Search
+      - Shows lists of dishes and recipes. Sort top rated dish, top rated recipe. Eventually I can allow Dish linking, requiring the same name, to show Dish groups. Dishes being specific to each cook.
+  - Featured DISHES.
+- Saving/Collecting recipes
+  - Find one on the site through search or filter and hit favorite. I'll think of a better way to do this later.
+  - My recipes page for all the ones you've created
+    - manually create through form
+    - save link through chrome extension or save link on site somewhere
+      - show up as draftRecipe
 
 
 ## Later Todos
-Consider renaming recipe to dish and variant to recipe again. 
+Consider renaming dish to dish and recipe to dish again. 
 
 
 

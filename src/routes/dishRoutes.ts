@@ -1,17 +1,139 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
+import dishesController from '../controllers/dishesController';
+import { createDishBody, dishParams } from '../schemas/dishSchemas';
 import recipesController from '../controllers/recipesController';
-import { createRecipeBody, recipeParams } from '../schemas/recipeSchemas';
-import variantsController from '../controllers/variantsController';
 
 const router = express.Router();
 /**
  * @swagger
- * '/recipes':
+ * '/dishes':
+ *  post:
+ *    tags:
+ *    - Dishes
+ *    description: Create a Dish
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/CreateDishRequest'
+ *    responses:
+ *      201:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/DishResponse'
+ */
+router.post('/', validateRequest({ body: createDishBody }), dishesController.createDish);
+
+/**
+ * @swagger
+ * '/dishes/{dishId}':
+ *    get:
+ *      tags:
+ *      - Dishes
+ *      description: Get a dish by id
+ *      parameters:
+ *        - in: path
+ *          name: dishId
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      responses:
+ *        200:
+ *          description: Retrieved Dish
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/DishResponse'
+ */
+router.get('/:dishId', validateRequest({ params: dishParams }), dishesController.readDish);
+
+/**
+ * @swagger
+ * '/dishes':
+ *    get:
+ *      tags:
+ *      - Dishes
+ *      description: Get Dishes
+ *      responses:
+ *        200:
+ *          description: Retrieved Dish
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/DishResponse'
+ */
+router.get('/', dishesController.readAllDishes);
+
+/**
+ * @swagger
+ * '/dishes/{dishId}':
+ *    patch:
+ *      tags:
+ *      - Dishes
+ *      description: Update a dish
+ *      parameters:
+ *        - in: path
+ *          name: dishId
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/components/schemas/UpdateDishRequest"
+ *      responses:
+ *        200:
+ *          description: Updated and Retrieved
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/DishResponse'
+ *        304:
+ *          description: Not updated
+ */
+router.patch('/:dishId', dishesController.updateDish);
+
+/**
+ * @swagger
+ * '/dishes/{dishId}':
+ *    delete:
+ *      tags:
+ *      - Dishes
+ *      description: Delete a dish
+ *      parameters:
+ *        - in: path
+ *          name: dishId
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      responses:
+ *        204:
+ *          description: Deleted and Retrieved
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/DishResponse'
+ */
+router.delete('/:dishId', dishesController.deleteDish);
+
+/**
+ * @swagger
+ * '/dishes/{dishId}/recipes':
  *  post:
  *    tags:
  *    - Recipes
- *    description: Create a Recipe
+ *    description: Create a Dish Recipe
+ *    parameters:
+ *      - in: path
+ *        name: dishId
+ *        type: string
+ *        required: true
+ *        description: mongo user id
  *    requestBody:
  *      required: true
  *      content:
@@ -25,143 +147,21 @@ const router = express.Router();
  *          application/json:
  *            schema:
  *              $ref: '#/components/schemas/RecipeResponse'
- */
-router.post('/', validateRequest({ body: createRecipeBody }), recipesController.createRecipe);
-
-/**
- * @swagger
- * '/recipes/{recipeId}':
- *    get:
- *      tags:
- *      - Recipes
- *      description: Get a recipe by id
- *      parameters:
- *        - in: path
- *          name: recipeId
- *          type: string
- *          required: true
- *          description: mongo user id
- *      responses:
- *        200:
- *          description: Retrieved Recipe
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
- */
-router.get('/:recipeId', validateRequest({ params: recipeParams }), recipesController.readRecipe);
-
-/**
- * @swagger
- * '/recipes':
- *    get:
- *      tags:
- *      - Recipes
- *      description: Get Recipes
- *      responses:
- *        200:
- *          description: Retrieved Recipe
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
- */
-router.get('/', recipesController.readAllRecipes);
-
-/**
- * @swagger
- * '/recipes/{recipeId}':
- *    patch:
- *      tags:
- *      - Recipes
- *      description: Update a recipe
- *      parameters:
- *        - in: path
- *          name: recipeId
- *          type: string
- *          required: true
- *          description: mongo user id
- *      requestBody:
- *        content:
- *          application/json:
- *            schema:
- *              $ref: "#/components/schemas/UpdateRecipeRequest"
- *      responses:
- *        200:
- *          description: Updated and Retrieved
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
- *        304:
- *          description: Not updated
- */
-router.patch('/:recipeId', recipesController.updateRecipe);
-
-/**
- * @swagger
- * '/recipes/{recipeId}':
- *    delete:
- *      tags:
- *      - Recipes
- *      description: Delete a recipe
- *      parameters:
- *        - in: path
- *          name: recipeId
- *          type: string
- *          required: true
- *          description: mongo user id
- *      responses:
- *        204:
- *          description: Deleted and Retrieved
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
- */
-router.delete('/:recipeId', recipesController.deleteRecipe);
-
-/**
- * @swagger
- * '/recipes/{recipeId}/variants':
- *  post:
- *    tags:
- *    - Variants
- *    description: Create a Recipe Variant
- *    parameters:
- *      - in: path
- *        name: recipeId
- *        type: string
- *        required: true
- *        description: mongo user id
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/CreateVariantRequest'
- *    responses:
- *      201:
- *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/VariantResponse'
  *      404:
- *        description: recipeId not found
+ *        description: dishId not found
  */
-router.post('/:recipeId/variants', variantsController.createVariant);
+router.post('/:dishId/recipes', recipesController.createRecipe);
 
 /**
  * @swagger
- * '/recipes/variants/{variantId}':
+ * '/dishes/recipes/{recipeId}':
  *    delete:
  *      tags:
- *      - Variants
- *      description: Delete a recipe's variant
+ *      - Recipes
+ *      description: Delete a dish's recipe
  *      parameters:
  *        - in: path
- *          name: variantId
+ *          name: recipeId
  *          type: string
  *          required: true
  *          description: mongo user id
@@ -171,8 +171,8 @@ router.post('/:recipeId/variants', variantsController.createVariant);
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/VariantResponse'
+ *                $ref: '#/components/schemas/RecipeResponse'
  */
-router.delete('/variants/:variantId', variantsController.deleteVariant);
+router.delete('/recipes/:recipeId', recipesController.deleteRecipe);
 
 export = router;

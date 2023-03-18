@@ -2,13 +2,13 @@
  * @openapi
  * components:
  *  schemas:
- *    CreateFavoriteVariantRequest:
+ *    CreateFavoriteRecipeRequest:
  *      type: object
  *      properties:
- *        variantId:
+ *        recipeId:
  *          type: string
  *          required: true
- *    FavoriteVariantResponse:
+ *    FavoriteRecipeResponse:
  *      type: object
  *      properties:
  *        id:
