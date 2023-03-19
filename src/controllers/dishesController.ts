@@ -29,7 +29,7 @@ const createDish = async (req: Request, res: Response, next: NextFunction): Prom
   const savedDish = await dish.save();
   await savedDish.populate('recipes');
 
-  res.status(201).json({ savedDish });
+  res.status(201).json(savedDish);
 };
 
 const readDish = async (req: Request<DishParams>, res: Response, next: NextFunction): Promise<void> => {

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Dish from '../models/dish';
-import Recipe from '../models/recipe';
+import Recipe, { CreateRecipeShape, RecipeDocument } from '../models/recipe';
 
 const createRecipe = async (req: Request, res: Response, next: NextFunction) => {
   const { dishId } = req.params;
@@ -10,11 +10,14 @@ const createRecipe = async (req: Request, res: Response, next: NextFunction) => 
     res.status(404).json({ message: `No Dish with id ${dishId} found.` });
     return;
   }
-  const recipe = new Recipe(req.body);
-  dish.recipes.push(recipe._id);
+
+  const createRecipeShape: CreateRecipeShape = { ...req.body, dishId: dish._id };
+  const createdRecipe: RecipeDocument = await Recipe.create(createRecipeShape);
+
+  dish.recipes.push(createdRecipe._id);
   await dish.save();
 
-  res.status(201).json({ recipe });
+  res.status(201).json(createdRecipe);
 };
 
 const deleteRecipe = async (req: Request, res: Response, next: NextFunction) => {
