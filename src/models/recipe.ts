@@ -44,7 +44,6 @@ export const recipeSchema: Schema = new Schema(
 // Recipe Middleware
 
 const deleteDishRelations = async (recipeDocument: RecipeDocument): Promise<void> => {
-  console.log('why the fuck am I here', recipeDocument)
   if (!recipeDocument) {
     throw new NotFoundError('Recipe not found in deleteDishRelations middleware');
   }

@@ -27,7 +27,7 @@ const createDish = async (req: Request, res: Response, next: NextFunction): Prom
   createdRecipes.forEach((recipe) => { dish.recipes.push(recipe._id); });
 
   const savedDish = await dish.save();
-  await savedDish.populate('recipes');
+  // await savedDish.populate('recipes');
 
   res.status(201).json(savedDish);
 };
@@ -42,12 +42,14 @@ const readDish = async (req: Request<DishParams>, res: Response, next: NextFunct
     throw new NotFoundError(`no dish found with id ${dishId}`);
   }
 
-  res.status(200).json({ dish });
+  // await dish.populate('recipes');
+
+  res.status(200).json(dish);
 };
 
 const readAllDishes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const dishes = await Dish.find();
-  res.status(200).json({ dishes });
+  res.status(200).json(dishes);
 };
 
 const updateDish = async (req: Request, res: Response, next: NextFunction) => {
@@ -61,7 +63,7 @@ const updateDish = async (req: Request, res: Response, next: NextFunction) => {
   dish.set(req.body);
   dish.save();
 
-  res.status(200).json({ dish });
+  res.status(200).json(dish);
 };
 
 const deleteDish = async (req: Request, res: Response, next: NextFunction) => {
@@ -72,7 +74,7 @@ const deleteDish = async (req: Request, res: Response, next: NextFunction) => {
   // if (!dish) {
   //   res.status(404).json({ message: 'not found' });
   // }
-  res.status(204).json({ dish });
+  res.status(204).json(dish);
 };
 
 export default {
