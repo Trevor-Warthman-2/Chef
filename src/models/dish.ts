@@ -35,7 +35,6 @@ const dishSchema: Schema = new Schema(
 
 // reference: https://mongoosejs.com/docs/middleware.html
 const deleteRecipeRelations = async (dishDocument: DishDocument): Promise<void> => {
-  console.log('and I was rUnngng', dishDocument);
   await Recipe.deleteMany({ _id: { $in: dishDocument.recipes } });
   // console.log(`Removed reference from Recipes ${deleted.map((del) => del._id)} to Dish ${dishDocument._id}`);
 };

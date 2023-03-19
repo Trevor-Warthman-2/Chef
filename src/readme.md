@@ -10,11 +10,9 @@ Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
-- get it working with the better DocumentType
-- populate upon createing document with recipe
-- push
-- rename v and r to d and r. remember plurals and capitolizations.
-- make new Recipe require dishId
+- figure out why create recipe isn't working
+- check delete recipe
+- make new Recipe require dishId??? idk what this means
 - edit create recipe endpont to do the something
 - Remove recipe from dish when delete recipe
 - Get Recipe creation and deleter working
@@ -25,8 +23,6 @@ First make a create recipe page.
   What's a generic name for this dish? (Ex: if you're making a southwestern burger, this might be your "Cheeseburger" dish.)
   ...Recipe stuff...
 Then make the home page with the filters
-
-HOW DO I SET THE TYPE OF A MODEL? IS IT A VARIANTDOCUMENT? WHT DO THEY NOT HAVE FUCKING IDS.
 
 - Do some more designing of database resources and plan out needs.
 - mark a way to show who has or has not voted on a recipe
