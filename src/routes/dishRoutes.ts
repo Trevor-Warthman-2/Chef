@@ -2,7 +2,7 @@ import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
 import dishesController from '../controllers/dishesController';
 import {
-  createDishBodySchema, createDishParamsSchema, deleteDishParamsSchema, indexDishesQuerySchema, showDishParamsSchema, updateDishParamsSchema,
+  createDishBodySchema, deleteDishParamsSchema, indexDishRecipesParamsSchema, indexDishRecipesQuerySchema, indexDishesQuerySchema, showDishParamsSchema, updateDishParamsSchema,
 } from '../schemas/dishSchemas';
 
 const router = express.Router();
@@ -27,7 +27,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/components/schemas/DishResponse'
  */
-router.post('/', validateRequest({ params: createDishParamsSchema, body: createDishBodySchema }), dishesController.createDish);
+router.post('/', validateRequest({ body: createDishBodySchema }), dishesController.createDish);
 
 /**
  * @swagger
@@ -121,5 +121,28 @@ router.patch('/:dishId', validateRequest({ params: updateDishParamsSchema }), di
  *                $ref: '#/components/schemas/DishResponse'
  */
 router.delete('/:dishId', validateRequest({ params: deleteDishParamsSchema }), dishesController.deleteDish);
+
+/**
+ * @swagger
+ * '/dishes/{dishId}/recipes':
+ *    get:
+ *      tags:
+ *      - Dishes
+ *      description: Get Recipes of a Dish
+ *      parameters:
+ *        - in: path
+ *          name: dishId
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      responses:
+ *        200:
+ *          description: Retrieved Recipes
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/RecipeResponse'
+ */
+router.get('/:dishId/recipes', validateRequest({ params: indexDishRecipesParamsSchema, query: indexDishRecipesQuerySchema }), dishesController.indexDishRecipes);
 
 export = router;

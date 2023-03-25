@@ -1,7 +1,7 @@
 import {
   object, string, array, TypeOf,
 } from 'zod';
-import { createRecipeBodySchema } from './recipeSchemas';
+import { createRecipeBodySchema, recipeSearchFilters } from './recipeSchemas';
 
 /*
 Example Zod:
@@ -57,7 +57,7 @@ export const createDishBodySchema = object({
   description: string().default('').optional(),
   recipes: array(createRecipeBodySchema).nonempty(),
 });
-export const createDishParamsSchema = dishIdParam;
+
 export type CreateDishRequestBodyShape = TypeOf<typeof createDishBodySchema>;
 export type CreateDishRequestShape = CreateDishRequestBodyShape;
 
@@ -93,3 +93,9 @@ export type UpdateDishRequestShape = UpdateDishRequestParamShape;
 export const deleteDishParamsSchema = dishIdParam;
 export type DeleteDishRequestParamShape = TypeOf<typeof deleteDishParamsSchema>;
 export type DeleteDishRequestShape = DeleteDishRequestParamShape;
+
+export const indexDishRecipesParamsSchema = dishIdParam;
+export const indexDishRecipesQuerySchema = recipeSearchFilters;
+type IndexDishRecipesRequestParamShape = TypeOf<typeof indexDishRecipesParamsSchema>;
+type IndexDishRecipesRequestQueryShape = TypeOf<typeof indexDishRecipesQuerySchema>
+export type IndexDishRecipesRequestShape = IndexDishRecipesRequestParamShape & IndexDishRecipesRequestQueryShape;

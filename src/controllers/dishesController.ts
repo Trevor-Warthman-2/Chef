@@ -4,7 +4,7 @@ import Types from 'mongoose';
 import Recipe, { RecipeDocument } from '../models/recipe';
 import Dish from '../models/dish';
 import {
-  CreateDishRequestBodyShape, DeleteDishRequestShape, IndexDishesRequestShape, ShowDishRequestShape, UpdateDishRequestShape,
+  CreateDishRequestBodyShape, DeleteDishRequestShape, IndexDishRecipesRequestShape, IndexDishesRequestShape, ShowDishRequestShape, UpdateDishRequestShape,
 } from '../schemas/dishSchemas';
 import { CreateRecipeRequestBodyShape, CreateRecipeRequestShape } from '../schemas/recipeSchemas';
 
@@ -30,7 +30,7 @@ const createDish = async (req: Request<CreateRecipeRequestShape>, res: Response)
 
   createdRecipes.forEach((recipe: RecipeDocument) => { dish.recipes.push(recipe._id); });
 
-  const savedDish = dish.save();
+  const savedDish = await dish.save();
   // await savedDish.populate('recipes');
 
   res.status(201).json(savedDish);
@@ -65,7 +65,7 @@ const updateDish = async (req: Request<UpdateDishRequestShape>, res: Response): 
     return;
   }
   dish.set(req.body);
-  dish.save();
+  await dish.save();
 
   res.status(200).json(dish);
 };
@@ -81,8 +81,20 @@ const deleteDish = async (req: Request<DeleteDishRequestShape>, res: Response): 
   res.status(204).json(dish);
 };
 
-/* TODO create index /dish/{id}/recipes/ */
+const indexDishRecipes = async (req: Request<IndexDishRecipesRequestShape>, res: Response): Promise<void> => {
+  const { dishId } = req.params;
+
+  const dish = await Dish.findById(dishId);
+
+  if (!dish) {
+    throw new NotFoundError(`No dish found with id ${dishId}`);
+  }
+
+  await dish.populate('recipes');
+
+  res.status(200).json(dish.recipes);
+};
 
 export default {
-  createDish, showDish, indexDishes, updateDish, deleteDish,
+  createDish, showDish, indexDishes, updateDish, deleteDish, indexDishRecipes,
 };

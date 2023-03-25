@@ -9,7 +9,7 @@ const justIdParam = object({
   }),
 });
 
-const recipeSearchFilters = object({
+export const recipeSearchFilters = object({
   title: string().optional(),
   titleContains: string().optional(),
   // Add more
@@ -127,8 +127,3 @@ export type CreateRecipeRequestBodyShape = TypeOf<typeof createRecipeBodySchema>
 export type CreateRecipeRequestParamsShape = TypeOf<typeof createRecipeParamsSchema>;
 export type CreateRecipeRequestShape = CreateRecipeRequestBodyShape & CreateRecipeRequestParamsShape;
 
-export const indexDishRecipesParamsSchema = justIdParam;
-export const indexDishRecipesQuerySchema = recipeSearchFilters;
-type IndexDishRecipesRequestParamsShape = TypeOf<typeof indexDishRecipesParamsSchema>;
-type IndexDishRecipesRequestQueryShape = TypeOf<typeof indexDishRecipesQuerySchema>;
-export type IndexDishRecipeRequestShape = IndexDishRecipesRequestParamsShape & IndexDishRecipesRequestQueryShape;

@@ -10,10 +10,7 @@ Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
-- I just changed .save to not use await so check that that's workin.
 - clean up
-- implement recipe swagger shapes
-- implement recipe controller
 - implement whole way through of /dish/{id}/recipes
 - implement search filters on /recipes
 - rename all request shapes

@@ -21,7 +21,7 @@ const createRecipe = async (req: Request<CreateRecipeRequestShape>, res: Respons
   const createdRecipe: RecipeDocument = await Recipe.create(createRecipeShape);
 
   dish.recipes.push(createdRecipe._id);
-  dish.save();
+  await dish.save();
 
   res.status(201).json(createdRecipe);
 };
@@ -53,7 +53,7 @@ const updateRecipe = async (req: Request<UpdateRecipesRequestShape>, res: Respon
     res.status(404).json({ message: `recipe with id ${recipeId} not found` });
   } else {
     recipe.set(req.body);
-    recipe.save();
+    await recipe.save();
   }
 
   res.status(200).json(recipe);
