@@ -1,7 +1,18 @@
 import {
   object, string, array, TypeOf,
 } from 'zod';
-import { createRecipeBody } from './recipeSchemas';
+import { createRecipeBodySchema } from './recipeSchemas';
+
+/*
+Example Zod:
+https://github.com/TomDoesTech/REST-API-Tutorial-Updated/blob/main/src/schema/product.schema.ts
+*/
+
+const dishIdParam = object({
+  dishId: string({
+    required_error: 'dish id is required',
+  }),
+});
 
 /**
  * @openapi
@@ -39,30 +50,28 @@ import { createRecipeBody } from './recipeSchemas';
  *          type: string
  */
 
-export const createDishBody = object({
+export const createDishBodySchema = object({
   title: string({
     required_error: 'Title is required',
   }),
   description: string().default('').optional(),
-  recipes: array(createRecipeBody).nonempty(),
+  recipes: array(createRecipeBodySchema).nonempty(),
 });
+export const createDishParamsSchema = dishIdParam;
+export type CreateDishRequestBodyShape = TypeOf<typeof createDishBodySchema>;
+export type CreateDishRequestShape = CreateDishRequestBodyShape;
 
-export type CreateDishRequestBody = TypeOf<typeof createDishBody>;
-// export type CreateDishRequest = TypeOf<typeof createDishBody>;
+// export const getDishSchema = object({
+//   params: dishIdParam,
+// });
+export const showDishParamsSchema = dishIdParam;
+export type ShowDishRequestParamShape = TypeOf<typeof showDishParamsSchema>;
+export type ShowDishRequestShape = ShowDishRequestParamShape;
 
-export const dishParams = object({
-  dishId: string({
-    required_error: 'dish id is required',
-  }),
-});
-
-export const getDishSchema = object({
-  params: dishParams,
-});
-
-export type DishParams = TypeOf<typeof dishParams>;
-export type ReadDishRequest = TypeOf<typeof getDishSchema>;
-// https://github.com/TomDoesTech/REST-API-Tutorial-Updated/blob/main/src/schema/product.schema.ts
+// export const indexDishParamsSchema = dishIdParam;
+// export type IndexDishRequestParamShape = TypeOf<typeof showDishParamsSchema>;
+export const indexDishesQuerySchema = object({});
+export type IndexDishesRequestShape = TypeOf<typeof indexDishesQuerySchema>;
 
 /**
  * @openapi
@@ -76,4 +85,11 @@ export type ReadDishRequest = TypeOf<typeof getDishSchema>;
  *        description:
  *          type: string
  */
-// Make this include title and desc but NOT varients
+
+export const updateDishParamsSchema = dishIdParam;
+export type UpdateDishRequestParamShape = TypeOf<typeof updateDishParamsSchema>;
+export type UpdateDishRequestShape = UpdateDishRequestParamShape;
+
+export const deleteDishParamsSchema = dishIdParam;
+export type DeleteDishRequestParamShape = TypeOf<typeof deleteDishParamsSchema>;
+export type DeleteDishRequestShape = DeleteDishRequestParamShape;

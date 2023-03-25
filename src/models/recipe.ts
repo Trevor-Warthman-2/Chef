@@ -1,8 +1,7 @@
 import mongoose, { Schema, Types } from 'mongoose';
 import { NotFoundError } from 'http-error-classes';
-import Step, { StepDocument } from './step';
-import Dish, { DishDocument } from './dish';
-import { CreateRecipeRequestBody } from '../schemas/recipeSchemas';
+import { StepDocument } from './step';
+import Dish from './dish';
 
 export interface RecipeDocument {
     _id: Types.ObjectId;
@@ -67,7 +66,7 @@ const Recipe = mongoose.model<RecipeDocument>('Recipe', recipeSchema);
 export default Recipe;
 
 // export default mongoose.model<IDishModel>('Author', DishSchema);
-type CreateRecipeRequestParams = {
-  dishId: Types.ObjectId;
-}
-export type CreateRecipeShape = CreateRecipeRequestBody & CreateRecipeRequestParams
+// type CreateRecipeRequestParams = {
+//   dishId: Types.ObjectId;
+// }
+// export type CreateRecipeShape = CreateRecipeRequestBody & CreateRecipeRequestParams

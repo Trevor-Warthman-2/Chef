@@ -8,6 +8,7 @@ import { config } from './config/config';
 import Logging from './library/logging';
 import basicRoutes from './routes/basicRoutes';
 import dishRoutes from './routes/dishRoutes';
+import recipeRoutes from './routes/recipeRoutes';
 import userRoutes from './routes/user/userRoutes';
 import AUTH_CONFIG from './config/authConfig';
 // import { OpenidRequest } from 'express-openid-connect';
@@ -70,6 +71,7 @@ const StartServer = (): void => {
   router.use('/', basicRoutes);
   router.use('/users', userRoutes);
   router.use('/dishes', dishRoutes);
+  router.use('/', recipeRoutes);
 
   /** Error handling */
   /* router.use((req, res, next) => {

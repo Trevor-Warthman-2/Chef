@@ -3,6 +3,59 @@ import {
 } from 'zod';
 import { createStepBody } from './stepSchemas';
 
+const justIdParam = object({
+  recipeId: string({
+    required_error: 'recipe id is required',
+  }),
+});
+
+const recipeSearchFilters = object({
+  title: string().optional(),
+  titleContains: string().optional(),
+  // Add more
+}).refine(
+  ({ title, titleContains } : { title?: string; titleContains?: string}) => title === undefined && titleContains === undefined, // this might need fixed later
+  {
+    message: 'Both name and nameContains cannot be defined',
+  },
+);
+
+/* /recipes
+*/
+
+export const showRecipeParamsSchema = justIdParam;
+type ShowRecipeRequestParamsShape = TypeOf<typeof showRecipeParamsSchema>;
+export type ShowRecipeRequestShape = ShowRecipeRequestParamsShape;
+
+// export const indexRecipeParamsSchema = justIdParam;
+export const indexRecipesQuerySchema = recipeSearchFilters;
+// export type IndexRecipeRequestParamsShape = TypeOf<typeof indexRecipeParamsSchema>;
+type IndexRecipesRequestQueryShape = TypeOf<typeof indexRecipesQuerySchema>;
+export type IndexRecipesRequestShape = /* IndexRecipeRequestParamsShape & */ IndexRecipesRequestQueryShape;
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    UpdateRecipeRequest:
+ *      type: object
+ *      properties:
+ *        title:
+ *          type: string
+ *        description:
+ *          type: string
+ */
+
+export const updateRecipeParamsSchema = justIdParam;
+type UpdateRecipeRequestParamsShape = TypeOf<typeof updateRecipeParamsSchema>;
+export type UpdateRecipesRequestShape = UpdateRecipeRequestParamsShape;
+
+export const deleteRecipeParamsSchema = justIdParam;
+type DeleteRecipeRequestParamsShape = TypeOf<typeof deleteRecipeParamsSchema>;
+export type DeleteRecipesRequestShape = DeleteRecipeRequestParamsShape;
+
+// /dishes/{id}/recipes
+
 /**
  * @openapi
  * components:
@@ -51,7 +104,7 @@ import { createStepBody } from './stepSchemas';
  *          type: number
  */
 
-export const createRecipeBody = object({
+export const createRecipeBodySchema = object({
   title: string({
     required_error: 'recipe title is required',
   }),
@@ -64,11 +117,18 @@ export const createRecipeBody = object({
   authorRating: number(),
 });
 
-export const createRecipeParams = object({
+export const createRecipeParamsSchema = object({
   dishId: string({
     required_error: 'dish id is required',
   }),
 });
-export type CreateRecipeRequestBody = TypeOf<typeof createRecipeBody>;
-export type CreateRecipeRequest = TypeOf<typeof createRecipeBody> & TypeOf<typeof createRecipeParams>;
 
+export type CreateRecipeRequestBodyShape = TypeOf<typeof createRecipeBodySchema>;
+export type CreateRecipeRequestParamsShape = TypeOf<typeof createRecipeParamsSchema>;
+export type CreateRecipeRequestShape = CreateRecipeRequestBodyShape & CreateRecipeRequestParamsShape;
+
+export const indexDishRecipesParamsSchema = justIdParam;
+export const indexDishRecipesQuerySchema = recipeSearchFilters;
+type IndexDishRecipesRequestParamsShape = TypeOf<typeof indexDishRecipesParamsSchema>;
+type IndexDishRecipesRequestQueryShape = TypeOf<typeof indexDishRecipesQuerySchema>;
+export type IndexDishRecipeRequestShape = IndexDishRecipesRequestParamsShape & IndexDishRecipesRequestQueryShape;

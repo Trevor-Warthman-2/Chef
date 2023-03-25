@@ -1,13 +1,17 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { NotFoundError } from 'http-error-classes';
-import Recipe, { RecipeDocument, CreateRecipeShape } from '../models/recipe';
+import Types from 'mongoose';
+import Recipe, { RecipeDocument } from '../models/recipe';
 import Dish from '../models/dish';
-import { CreateDishRequestBody, DishParams } from '../schemas/dishSchemas';
+import {
+  CreateDishRequestBodyShape, DeleteDishRequestShape, IndexDishesRequestShape, ShowDishRequestShape, UpdateDishRequestShape,
+} from '../schemas/dishSchemas';
+import { CreateRecipeRequestBodyShape, CreateRecipeRequestShape } from '../schemas/recipeSchemas';
 
 // import { ReadDishRequest } from '../schemas/dishSchemas';
 
-const createDish = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const { body } : { body: CreateDishRequestBody } = req;
+const createDish = async (req: Request<CreateRecipeRequestShape>, res: Response): Promise<void> => {
+  const { body } = req;
   const { title, description, recipes } = body;
 
   const dish = new Dish({
@@ -17,22 +21,22 @@ const createDish = async (req: Request, res: Response, next: NextFunction): Prom
 
   const promisedRecipes: Array<Promise<RecipeDocument>> = [];
   for (const recipe of recipes) {
-    const createRecipeShape: CreateRecipeShape = { ...recipe, dishId: dish._id };
+    const createRecipeShape: CreateRecipeRequestBodyShape & Types.ObjectId = { ...recipe, dishId: dish._id };
     const createdRecipe: Promise<RecipeDocument> = Recipe.create(createRecipeShape);
     promisedRecipes.push(createdRecipe);
   }
 
   const createdRecipes = await Promise.all(promisedRecipes);
 
-  createdRecipes.forEach((recipe) => { dish.recipes.push(recipe._id); });
+  createdRecipes.forEach((recipe: RecipeDocument) => { dish.recipes.push(recipe._id); });
 
-  const savedDish = await dish.save();
+  const savedDish = dish.save();
   // await savedDish.populate('recipes');
 
   res.status(201).json(savedDish);
 };
 
-const readDish = async (req: Request<DishParams>, res: Response, next: NextFunction): Promise<void> => {
+const showDish = async (req: Request<ShowDishRequestShape>, res: Response): Promise<void> => {
   // const { id } : { id: string } = req.params;
   const { dishId } = req.params;
 
@@ -47,12 +51,12 @@ const readDish = async (req: Request<DishParams>, res: Response, next: NextFunct
   res.status(200).json(dish);
 };
 
-const readAllDishes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const indexDishes = async (req: Request<IndexDishesRequestShape>, res: Response): Promise<void> => {
   const dishes = await Dish.find();
   res.status(200).json(dishes);
 };
 
-const updateDish = async (req: Request, res: Response, next: NextFunction) => {
+const updateDish = async (req: Request<UpdateDishRequestShape>, res: Response): Promise<void> => {
   const { dishId } = req.params;
 
   const dish = await Dish.findById(dishId);
@@ -66,7 +70,7 @@ const updateDish = async (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json(dish);
 };
 
-const deleteDish = async (req: Request, res: Response, next: NextFunction) => {
+const deleteDish = async (req: Request<DeleteDishRequestShape>, res: Response): Promise<void> => {
   const { dishId } = req.params;
 
   const dish = await Dish.findByIdAndDelete(dishId);
@@ -77,6 +81,8 @@ const deleteDish = async (req: Request, res: Response, next: NextFunction) => {
   res.status(204).json(dish);
 };
 
+/* TODO create index /dish/{id}/recipes/ */
+
 export default {
-  createDish, readDish, readAllDishes, updateDish, deleteDish,
+  createDish, showDish, indexDishes, updateDish, deleteDish,
 };

@@ -1,8 +1,9 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
 import dishesController from '../controllers/dishesController';
-import { createDishBody, dishParams } from '../schemas/dishSchemas';
-import recipesController from '../controllers/recipesController';
+import {
+  createDishBodySchema, createDishParamsSchema, deleteDishParamsSchema, indexDishesQuerySchema, showDishParamsSchema, updateDishParamsSchema,
+} from '../schemas/dishSchemas';
 
 const router = express.Router();
 /**
@@ -26,7 +27,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/components/schemas/DishResponse'
  */
-router.post('/', validateRequest({ body: createDishBody }), dishesController.createDish);
+router.post('/', validateRequest({ params: createDishParamsSchema, body: createDishBodySchema }), dishesController.createDish);
 
 /**
  * @swagger
@@ -49,7 +50,7 @@ router.post('/', validateRequest({ body: createDishBody }), dishesController.cre
  *              schema:
  *                $ref: '#/components/schemas/DishResponse'
  */
-router.get('/:dishId', validateRequest({ params: dishParams }), dishesController.readDish);
+router.get('/:dishId', validateRequest({ params: showDishParamsSchema }), dishesController.showDish);
 
 /**
  * @swagger
@@ -66,7 +67,7 @@ router.get('/:dishId', validateRequest({ params: dishParams }), dishesController
  *              schema:
  *                $ref: '#/components/schemas/DishResponse'
  */
-router.get('/', dishesController.readAllDishes);
+router.get('/', validateRequest({ query: indexDishesQuerySchema }), dishesController.indexDishes);
 
 /**
  * @swagger
@@ -96,7 +97,7 @@ router.get('/', dishesController.readAllDishes);
  *        304:
  *          description: Not updated
  */
-router.patch('/:dishId', dishesController.updateDish);
+router.patch('/:dishId', validateRequest({ params: updateDishParamsSchema }), dishesController.updateDish);
 
 /**
  * @swagger
@@ -119,60 +120,6 @@ router.patch('/:dishId', dishesController.updateDish);
  *              schema:
  *                $ref: '#/components/schemas/DishResponse'
  */
-router.delete('/:dishId', dishesController.deleteDish);
-
-/**
- * @swagger
- * '/dishes/{dishId}/recipes':
- *  post:
- *    tags:
- *    - Recipes
- *    description: Create a Dish Recipe
- *    parameters:
- *      - in: path
- *        name: dishId
- *        type: string
- *        required: true
- *        description: mongo user id
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/CreateRecipeRequest'
- *    responses:
- *      201:
- *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/RecipeResponse'
- *      404:
- *        description: dishId not found
- */
-router.post('/:dishId/recipes', recipesController.createRecipe);
-
-/**
- * @swagger
- * '/dishes/recipes/{recipeId}':
- *    delete:
- *      tags:
- *      - Recipes
- *      description: Delete a dish's recipe
- *      parameters:
- *        - in: path
- *          name: recipeId
- *          type: string
- *          required: true
- *          description: mongo user id
- *      responses:
- *        204:
- *          description: Deleted and Retrieved
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
- */
-router.delete('/recipes/:recipeId', recipesController.deleteRecipe);
+router.delete('/:dishId', validateRequest({ params: deleteDishParamsSchema }), dishesController.deleteDish);
 
 export = router;

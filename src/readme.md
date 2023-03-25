@@ -10,6 +10,21 @@ Email Address is not unique since you can have multiple accounts.
 
 
 Todos:
+- I just changed .save to not use await so check that that's workin.
+- clean up
+- implement recipe swagger shapes
+- implement recipe controller
+- implement whole way through of /dish/{id}/recipes
+- implement search filters on /recipes
+- rename all request shapes
+- put in validations in all routes
+- revisit diagram and plan what lives on where embedded or referenced
+- then create the recipe rotues
+- move all dish and recipe things to one schema and need a seperate one for /recipes.
+/dish/{id}/recipes is a valid thing. 
+
+- Write a 404 + other error catcher wrapper around controllers. https://scoutapm.com/blog/express-error-handling
+
 - figure out why create recipe isn't working
 - check delete recipe
 - make new Recipe require dishId??? idk what this means
