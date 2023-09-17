@@ -7,6 +7,7 @@ import {
   CreateRecipeRequestShape, DeleteRecipesRequestShape, ShowRecipeRequestShape, UpdateRecipesRequestShape,
 } from '../schemas/recipeSchemas';
 import { IndexDishesRequestShape } from '../schemas/dishSchemas';
+import { filterRecipes } from '../services/recipesService';
 
 const createRecipe = async (req: Request<CreateRecipeRequestShape>, res: Response): Promise<void> => {
   const { dishId } = req.params;
@@ -27,7 +28,6 @@ const createRecipe = async (req: Request<CreateRecipeRequestShape>, res: Respons
 };
 
 const showRecipe = async (req: Request<ShowRecipeRequestShape>, res: Response): Promise<void> => {
-  console.log('show')
   const { recipeId } = req.params;
 
   const recipe = await Recipe.findById(recipeId);
@@ -40,8 +40,8 @@ const showRecipe = async (req: Request<ShowRecipeRequestShape>, res: Response): 
 };
 
 const indexRecipes = async (req: Request<IndexDishesRequestShape>, res: Response): Promise<void> => {
-  console.log('index')
-  const recipes = await Recipe.find();
+  const { query } = req;
+  const recipes = await filterRecipes(query);
   res.status(200).json(recipes);
 };
 

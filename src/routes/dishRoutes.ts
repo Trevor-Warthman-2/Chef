@@ -130,11 +130,19 @@ router.delete('/:dishId', validateRequest({ params: deleteDishParamsSchema }), d
  *      - Dishes
  *      description: Get Recipes of a Dish
  *      parameters:
- *        - in: path
- *          name: dishId
+ *      - in: path
+ *        name: dishId
+ *        type: string
+ *        required: true
+ *        description: mongo user id
+ *      - in: query
+ *        name: title
+ *        schema:
  *          type: string
- *          required: true
- *          description: mongo user id
+ *      - in: query
+ *        name: titleContains
+ *        schema:
+ *          type: string
  *      responses:
  *        200:
  *          description: Retrieved Recipes

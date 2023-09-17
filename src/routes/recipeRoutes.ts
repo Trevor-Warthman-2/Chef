@@ -67,6 +67,19 @@ router.get('/recipes/:recipeId', validateRequest({ params: showRecipeParamsSchem
  *      tags:
  *      - Recipes
  *      description: Get or filter Recipes
+ *      parameters:
+ *      - in: query
+ *        name: title
+ *        schema:
+ *          type: string
+ *      - in: query
+ *        name: titleContains
+ *        schema:
+ *          type: string
+ *      - in: query
+ *        name: dishId
+ *        schema:
+ *          type: string
  *      responses:
  *        200:
  *          description: Retrieved Recipes

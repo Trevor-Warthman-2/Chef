@@ -12,16 +12,16 @@ const justIdParam = object({
 export const recipeSearchFilters = object({
   title: string().optional(),
   titleContains: string().optional(),
+  dishId: string().optional(),
   // Add more
-}).refine(
-  ({ title, titleContains } : { title?: string; titleContains?: string}) => title === undefined && titleContains === undefined, // this might need fixed later
-  {
-    message: 'Both name and nameContains cannot be defined',
-  },
-);
+}).refine(({ title, titleContains }: { title?: string; titleContains?: string }) => title === undefined || titleContains === undefined, {
+  message: 'Both name and nameContains cannot be defined',
+});
+
+export type RecipeSearchFilters = TypeOf<typeof recipeSearchFilters>;
 
 /* /recipes
-*/
+ */
 
 export const showRecipeParamsSchema = justIdParam;
 type ShowRecipeRequestParamsShape = TypeOf<typeof showRecipeParamsSchema>;
@@ -126,4 +126,3 @@ export const createRecipeParamsSchema = object({
 export type CreateRecipeRequestBodyShape = TypeOf<typeof createRecipeBodySchema>;
 export type CreateRecipeRequestParamsShape = TypeOf<typeof createRecipeParamsSchema>;
 export type CreateRecipeRequestShape = CreateRecipeRequestBodyShape & CreateRecipeRequestParamsShape;
-

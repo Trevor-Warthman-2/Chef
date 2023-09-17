@@ -7,6 +7,7 @@ import {
   CreateDishRequestBodyShape, DeleteDishRequestShape, IndexDishRecipesRequestShape, IndexDishesRequestShape, ShowDishRequestShape, UpdateDishRequestShape,
 } from '../schemas/dishSchemas';
 import { CreateRecipeRequestBodyShape, CreateRecipeRequestShape } from '../schemas/recipeSchemas';
+import { filterRecipes } from '../services/recipesService';
 
 // import { ReadDishRequest } from '../schemas/dishSchemas';
 
@@ -83,6 +84,7 @@ const deleteDish = async (req: Request<DeleteDishRequestShape>, res: Response): 
 
 const indexDishRecipes = async (req: Request<IndexDishRecipesRequestShape>, res: Response): Promise<void> => {
   const { dishId } = req.params;
+  const { query } = req;
 
   const dish = await Dish.findById(dishId);
 
@@ -90,9 +92,10 @@ const indexDishRecipes = async (req: Request<IndexDishRecipesRequestShape>, res:
     throw new NotFoundError(`No dish found with id ${dishId}`);
   }
 
-  await dish.populate('recipes');
+  // await dish.populate('recipes');
+  const recipes = await filterRecipes({ dishId, ...query });
 
-  res.status(200).json(dish.recipes);
+  res.status(200).json(recipes);
 };
 
 export default {
