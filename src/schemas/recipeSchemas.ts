@@ -33,6 +33,9 @@ export const indexRecipesQuerySchema = recipeSearchFilters;
 type IndexRecipesRequestQueryShape = TypeOf<typeof indexRecipesQuerySchema>;
 export type IndexRecipesRequestShape = /* IndexRecipeRequestParamsShape & */ IndexRecipesRequestQueryShape;
 
+type indexMyRecipesRequestQueryShape = TypeOf<typeof indexRecipesQuerySchema>;
+export type indexMyRecipesRequestShape = /* IndexRecipeRequestParamsShape & */ indexMyRecipesRequestQueryShape;
+
 /**
  * @openapi
  * components:

@@ -4,7 +4,7 @@ import Types from 'mongoose';
 import Dish from '../models/dish';
 import Recipe, { RecipeDocument } from '../models/recipe';
 import {
-  CreateRecipeRequestShape, DeleteRecipesRequestShape, ShowRecipeRequestShape, UpdateRecipesRequestShape,
+  CreateRecipeRequestShape, DeleteRecipesRequestShape, indexMyRecipesRequestShape, ShowRecipeRequestShape, UpdateRecipesRequestShape,
 } from '../schemas/recipeSchemas';
 import { IndexDishesRequestShape } from '../schemas/dishSchemas';
 import { filterRecipes } from '../services/recipesService';
@@ -45,6 +45,13 @@ const indexRecipes = async (req: Request<IndexDishesRequestShape>, res: Response
   res.status(200).json(recipes);
 };
 
+const indexMyRecipes = async (req: Request<indexMyRecipesRequestShape>, res: Response): Promise<void> => {
+  const { query, oidc }: any = req;
+  query.author = oidc.user.sub;
+  const recipes = await filterRecipes(query);
+  res.status(200).json(recipes);
+};
+
 const updateRecipe = async (req: Request<UpdateRecipesRequestShape>, res: Response): Promise<void> => {
   const { recipeId } = req.params;
 
@@ -68,5 +75,5 @@ const deleteRecipe = async (req: Request<DeleteRecipesRequestShape>, res: Respon
 };
 
 export default {
-  createRecipe, showRecipe, indexRecipes, updateRecipe, deleteRecipe,
+  createRecipe, showRecipe, indexRecipes, indexMyRecipes, updateRecipe, deleteRecipe,
 };

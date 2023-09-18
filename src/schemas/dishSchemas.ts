@@ -73,6 +73,9 @@ export type ShowDishRequestShape = ShowDishRequestParamShape;
 export const indexDishesQuerySchema = object({});
 export type IndexDishesRequestShape = TypeOf<typeof indexDishesQuerySchema>;
 
+export const indexMyDishesQuerySchema = object({});
+export type indexMyDishesRequestShape = TypeOf<typeof indexDishesQuerySchema>;
+
 /**
  * @openapi
  * components:

@@ -4,6 +4,7 @@ import recipesController from '../controllers/recipesController';
 import {
   createRecipeBodySchema, createRecipeParamsSchema, deleteRecipeParamsSchema, indexRecipesQuerySchema, showRecipeParamsSchema, updateRecipeParamsSchema,
 } from '../schemas/recipeSchemas';
+import { requireAuthenticated } from '../middleware/authentication';
 
 const router = express.Router();
 /**
@@ -39,29 +40,6 @@ router.post('/dishes/:dishId/recipes', validateRequest({ params: createRecipePar
 
 /**
  * @swagger
- * '/recipes/{recipeId}':
- *    get:
- *      tags:
- *      - Recipes
- *      description: Get a Recipe by id
- *      parameters:
- *        - in: path
- *          name: recipeId
- *          type: string
- *          required: true
- *          description: mongo user id
- *      responses:
- *        200:
- *          description: Retrieved Recipe
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/RecipeResponse'
- */
-router.get('/recipes/:recipeId', validateRequest({ params: showRecipeParamsSchema }), recipesController.showRecipe);
-
-/**
- * @swagger
  * '/recipes':
  *    get:
  *      tags:
@@ -89,6 +67,59 @@ router.get('/recipes/:recipeId', validateRequest({ params: showRecipeParamsSchem
  *                $ref: '#/components/schemas/RecipeResponse'
  */
 router.get('/recipes', validateRequest({ query: indexRecipesQuerySchema }), recipesController.indexRecipes);
+
+/**
+ * @swagger
+ * '/recipes/mine':
+ *    get:
+ *      tags:
+ *      - Recipes
+ *      description: Get or filter my Recipes
+ *      parameters:
+ *      - in: query
+ *        name: title
+ *        schema:
+ *          type: string
+ *      - in: query
+ *        name: titleContains
+ *        schema:
+ *          type: string
+ *      - in: query
+ *        name: dishId
+ *        schema:
+ *          type: string
+ *      responses:
+ *        200:
+ *          description: Retrieved Recipes
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/RecipeResponse'
+ */
+router.get('/recipes/mine', requireAuthenticated(), validateRequest({ query: indexRecipesQuerySchema }), recipesController.indexMyRecipes);
+
+/**
+ * @swagger
+ * '/recipes/{recipeId}':
+ *    get:
+ *      tags:
+ *      - Recipes
+ *      description: Get a Recipe by id
+ *      parameters:
+ *        - in: path
+ *          name: recipeId
+ *          type: string
+ *          required: true
+ *          description: mongo user id
+ *      responses:
+ *        200:
+ *          description: Retrieved Recipe
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/RecipeResponse'
+ */
+router.get('/recipes/:recipeId', validateRequest({ params: showRecipeParamsSchema }), recipesController.showRecipe);
 
 /**
  * @swagger

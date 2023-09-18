@@ -2,10 +2,18 @@ Frontend App Name: "Stockpot" "Dish Compendium" "Pap-Eurika, for all your great 
 
 Email Address is not unique since you can have multiple accounts.
 
+
+UserIds: req.oidc.user.sub. Format: auth0|65065fa470d3cfe7ec802c6f to say method and id.
+
 Todos:
+- make a Jira so I can keep track of what I've done
+    - Made a requireAuth middleware to 401 and not continue 
+- Added author id/createdby to dish.
+- NOW: Then in /user/id/dishes or /recipes I can use oidc.user.sub to check if it's theirs. 
+Dishes have an author. Recipes can get it from the dish. Check /user/id/recipes that way and using oidc.user.sub.
 - Make a /users/{id}/dishes route and /users/{id}/recipes route (can copy mostly) because these are the main ones we'll use.
 - first goal: make a page listing all the logged in user's recipes. then edit them so I can start using this damn app.
-
+- Find some way to implement making sure people can only edit or delete their own stuff. Not sure if I did that already.
  - Dishes and recipes can be all but /dishes/me and /recipes/me maybe.
 -   implement authorization on create, update, delete recipes: make sure they're yours OR you have an admin permission.
 -   change author to chef
@@ -15,9 +23,9 @@ Todos:
 -   implement search filters on /recipes and /dish/{id}/recipes
 -   revisit diagram and plan what lives on where embedded or referenced
 -   then create the recipe rotues
--   move all dish and recipe things to one schema and need a seperate one for /recipes. /dish/{id}/recipes is a valid thing.
+-   move all dish and recipe things to one schema and need a separate one for /recipes. /dish/{id}/recipes is a valid thing.
 
--   Move swagger docs to seperate openapi files
+-   Move swagger docs to separate openapi files
 
 -   Write a 404 + other error catcher wrapper around controllers. https://scoutapm.com/blog/express-error-handling
 
@@ -141,3 +149,8 @@ Remember exec is important when you want a promise from mongoose https://stackov
 - you can start node with 'nodemon' in the chef dir
 - 
 
+
+
+
+## Lessons learned
+- express show routes need to go behind non-crud routes or /dishes/mine will be read mine as an id instead of a part of the route.

@@ -4,7 +4,7 @@ import Types from 'mongoose';
 import Recipe, { RecipeDocument } from '../models/recipe';
 import Dish from '../models/dish';
 import {
-  CreateDishRequestBodyShape, DeleteDishRequestShape, IndexDishRecipesRequestShape, IndexDishesRequestShape, ShowDishRequestShape, UpdateDishRequestShape,
+  DeleteDishRequestShape, IndexDishRecipesRequestShape, IndexDishesRequestShape, indexMyDishesRequestShape, ShowDishRequestShape, UpdateDishRequestShape,
 } from '../schemas/dishSchemas';
 import { CreateRecipeRequestBodyShape, CreateRecipeRequestShape } from '../schemas/recipeSchemas';
 import { filterRecipes } from '../services/recipesService';
@@ -12,12 +12,13 @@ import { filterRecipes } from '../services/recipesService';
 // import { ReadDishRequest } from '../schemas/dishSchemas';
 
 const createDish = async (req: Request<CreateRecipeRequestShape>, res: Response): Promise<void> => {
-  const { body } = req;
+  const { body, oidc } = req;
   const { title, description, recipes } = body;
 
   const dish = new Dish({
     title,
     description,
+    author: oidc.isAuthenticated() ? oidc.user.sub : 'guest',
   });
 
   const promisedRecipes: Array<Promise<RecipeDocument>> = [];
@@ -54,6 +55,12 @@ const showDish = async (req: Request<ShowDishRequestShape>, res: Response): Prom
 
 const indexDishes = async (req: Request<IndexDishesRequestShape>, res: Response): Promise<void> => {
   const dishes = await Dish.find();
+  res.status(200).json(dishes);
+};
+
+const indexMyDishes = async (req: Request<indexMyDishesRequestShape>, res: Response): Promise<void> => {
+  const { oidc }: any = req;
+  const dishes = await Dish.find({ author: oidc.user.sub }); // NEW: TRY THISs
   res.status(200).json(dishes);
 };
 
@@ -99,5 +106,5 @@ const indexDishRecipes = async (req: Request<IndexDishRecipesRequestShape>, res:
 };
 
 export default {
-  createDish, showDish, indexDishes, updateDish, deleteDish, indexDishRecipes,
+  createDish, showDish, indexDishes, indexMyDishes, updateDish, deleteDish, indexDishRecipes,
 };

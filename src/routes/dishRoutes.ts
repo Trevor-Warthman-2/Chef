@@ -4,6 +4,7 @@ import dishesController from '../controllers/dishesController';
 import {
   createDishBodySchema, deleteDishParamsSchema, indexDishRecipesParamsSchema, indexDishRecipesQuerySchema, indexDishesQuerySchema, showDishParamsSchema, updateDishParamsSchema,
 } from '../schemas/dishSchemas';
+import { requireAuthenticated } from '../middleware/authentication';
 
 const router = express.Router();
 /**
@@ -31,6 +32,40 @@ router.post('/', validateRequest({ body: createDishBodySchema }), dishesControll
 
 /**
  * @swagger
+ * '/dishes':
+ *    get:
+ *      tags:
+ *      - Dishes
+ *      description: Get Dishes
+ *      responses:
+ *        200:
+ *          description: Retrieved Dish
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/DishResponse'
+ */
+router.get('/', validateRequest({ query: indexDishesQuerySchema }), dishesController.indexDishes);
+
+/**
+ * @swagger
+ * '/dishes/mine':
+ *    get:
+ *      tags:
+ *      - Dishes
+ *      description: Get My Dishes
+ *      responses:
+ *        200:
+ *          description: Retrieved Dish
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/DishResponse'
+ */
+router.get('/mine', requireAuthenticated(), validateRequest({ query: indexDishesQuerySchema }), dishesController.indexMyDishes);
+
+/**
+ * @swagger
  * '/dishes/{dishId}':
  *    get:
  *      tags:
@@ -51,23 +86,6 @@ router.post('/', validateRequest({ body: createDishBodySchema }), dishesControll
  *                $ref: '#/components/schemas/DishResponse'
  */
 router.get('/:dishId', validateRequest({ params: showDishParamsSchema }), dishesController.showDish);
-
-/**
- * @swagger
- * '/dishes':
- *    get:
- *      tags:
- *      - Dishes
- *      description: Get Dishes
- *      responses:
- *        200:
- *          description: Retrieved Dish
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/DishResponse'
- */
-router.get('/', validateRequest({ query: indexDishesQuerySchema }), dishesController.indexDishes);
 
 /**
  * @swagger

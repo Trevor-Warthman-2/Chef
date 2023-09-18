@@ -12,6 +12,7 @@ export interface DishDocument {
     _id: Types.ObjectId;
     title: string;
     description: string;
+    author: string;
     recipes: Array<Types.ObjectId>;
     createdAt: Date;
     updatedAt: Date;
@@ -21,6 +22,7 @@ const dishSchema: Schema = new Schema(
   {
     title: String,
     description: { type: String },
+    author: String,
     recipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
     /* recipes: {
       type: Array,

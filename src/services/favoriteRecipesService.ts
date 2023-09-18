@@ -19,7 +19,7 @@ export const linkFavoriteRecipe = async (userId: string, recipeId: string): Prom
 
   if (!favoriteRecipes.includes(recipeId)) {
     favoriteRecipes.push(recipeId);
-    await auth0Client.updateUserMetadata({ id: userId }, { favoriteRecipes });
+    await auth0Client.updateUserMetadata({ id: userId }, { favoriteRecipes }); // Might want to make this it's own table later
   } else {
     console.log('Recipe already linked');
   }
