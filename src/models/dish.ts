@@ -1,5 +1,6 @@
 import mongoose, { Schema, Types } from 'mongoose';
 import Recipe, { RecipeDocument } from './recipe';
+import { AuthorId, AuthorIdSchema } from '../randomTypes';
 
 /* export interface IDish {
     title: string;
@@ -12,7 +13,7 @@ export interface DishDocument {
     _id: Types.ObjectId;
     title: string;
     description: string;
-    author: string;
+    author: AuthorId;
     recipes: Array<Types.ObjectId>;
     createdAt: Date;
     updatedAt: Date;
@@ -22,7 +23,7 @@ const dishSchema: Schema = new Schema(
   {
     title: String,
     description: { type: String },
-    author: String,
+    author: AuthorIdSchema,
     recipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
     /* recipes: {
       type: Array,

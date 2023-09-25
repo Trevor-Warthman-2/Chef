@@ -10,6 +10,7 @@ import { IndexDishesRequestShape } from '../schemas/dishSchemas';
 import { filterRecipes } from '../services/recipesService';
 
 const createRecipe = async (req: Request<CreateRecipeRequestShape>, res: Response): Promise<void> => {
+  const { oidc } = req;
   const { dishId } = req.params;
 
   const dish = await Dish.findById(dishId);
@@ -18,7 +19,7 @@ const createRecipe = async (req: Request<CreateRecipeRequestShape>, res: Respons
     return;
   }
 
-  const createRecipeShape: CreateRecipeRequestShape & Types.ObjectId = { ...req.body, dishId: dish._id };
+  const createRecipeShape: CreateRecipeRequestShape & Types.ObjectId = { ...req.body, dishId: dish._id, author: oidc.isAuthenticated() ? oidc.user.sub : 'guest' };
   const createdRecipe: RecipeDocument = await Recipe.create(createRecipeShape);
 
   dish.recipes.push(createdRecipe._id);

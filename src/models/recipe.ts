@@ -2,6 +2,7 @@ import mongoose, { Schema, Types } from 'mongoose';
 import { NotFoundError } from 'http-error-classes';
 import { StepDocument } from './step';
 import Dish from './dish';
+import { AuthorId, AuthorIdSchema } from '../randomTypes';
 
 export interface RecipeDocument {
     _id: Types.ObjectId;
@@ -10,6 +11,7 @@ export interface RecipeDocument {
     dishId: Types.ObjectId;
     cooked: boolean;
     chefsChoice: boolean;
+    author: AuthorId;
     authorRating: number;
     steps: Array<StepDocument>;
     createdAt: Date;
@@ -30,6 +32,7 @@ export const recipeSchema: Schema = new Schema(
     }, */
     cooked: Boolean,
     chefsChoice: Boolean,
+    author: AuthorIdSchema,
     authorRating: Number,
     /* ratings: {
       type: [RecipeRating],

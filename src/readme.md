@@ -6,6 +6,7 @@ Email Address is not unique since you can have multiple accounts.
 UserIds: req.oidc.user.sub. Format: auth0|65065fa470d3cfe7ec802c6f to say method and id.
 
 Todos:
+- re-organzie this shit by subject rather than the bullshit way the node standard is
 - make a Jira so I can keep track of what I've done
     - Made a requireAuth middleware to 401 and not continue 
 - Added author id/createdby to dish.
@@ -15,6 +16,7 @@ Dishes have an author. Recipes can get it from the dish. Check /user/id/recipes 
 - first goal: make a page listing all the logged in user's recipes. then edit them so I can start using this damn app.
 - Find some way to implement making sure people can only edit or delete their own stuff. Not sure if I did that already.
  - Dishes and recipes can be all but /dishes/me and /recipes/me maybe.
+ - onDelete recipes need to tell the dish to reload.
 -   implement authorization on create, update, delete recipes: make sure they're yours OR you have an admin permission.
 -   change author to chef
 -   add chef userid to each dish and recipe
@@ -35,7 +37,8 @@ Dishes have an author. Recipes can get it from the dish. Check /user/id/recipes 
 -   edit create recipe endpont to do the something
 -   Remove recipe from dish when delete recipe
 -   Get Recipe creation and deleter working
--   get recipe endpoint
+
+- honestly consider making Recipes a Subdoc instead of a nested schema it's getting really annoying.
 
 Now that I have a proof of concept, start the frontend. First make a create recipe page. What's a generic name for this dish? (Ex: if you're making a southwestern burger, this might be your
 "Cheeseburger" dish.) ...Recipe stuff... Then make the home page with the filters
@@ -154,3 +157,7 @@ Remember exec is important when you want a promise from mongoose https://stackov
 
 ## Lessons learned
 - express show routes need to go behind non-crud routes or /dishes/mine will be read mine as an id instead of a part of the route.
+- it's weird to use nested schemas instead of subdocs because then you can't (at least not easily) sub query without aggregating (basically joining) which is weird. Should look into that tho.
+
+
+maybe add X-Total-Count to all routes if I can get it to stop expecting a promise:  x.set('X-Total-Count', x.length);
