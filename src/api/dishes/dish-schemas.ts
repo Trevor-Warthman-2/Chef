@@ -1,7 +1,7 @@
 import {
   object, string, array, TypeOf,
 } from 'zod';
-import { createRecipeBodySchema, recipeSearchFilters } from './recipeSchemas';
+import { createRecipeBodySchema, recipeSearchFilters } from '../recipes/recipe-schemas';
 
 /*
 Example Zod:

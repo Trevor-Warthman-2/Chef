@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { NotFoundError } from 'http-error-classes';
 import Types from 'mongoose';
-import Recipe, { RecipeDocument } from '../models/recipe';
-import Dish from '../models/dish';
+import Recipe, { RecipeDocument } from '../recipes/recipe';
+import Dish from './dish';
 import {
   DeleteDishRequestShape, IndexDishRecipesRequestShape, IndexDishesRequestShape, indexMyDishesRequestShape, ShowDishRequestShape, UpdateDishRequestShape,
-} from '../schemas/dishSchemas';
-import { CreateRecipeRequestBodyShape, CreateRecipeRequestShape } from '../schemas/recipeSchemas';
-import { filterRecipes } from '../services/recipesService';
+} from './dish-schemas';
+import { CreateRecipeRequestBodyShape, CreateRecipeRequestShape } from '../recipes/recipe-schemas';
+import { filterRecipes } from '../recipes/recipes-service';
 
 // import { ReadDishRequest } from '../schemas/dishSchemas';
 

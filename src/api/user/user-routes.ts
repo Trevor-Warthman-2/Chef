@@ -1,5 +1,5 @@
 import express from 'express';
-import favoriteRecipeRoutes from './userMetaData/favoriteRecipes';
+import favoriteRecipeRoutes from './user-meta-data/favorite-recipes';
 
 const router = express.Router();
 

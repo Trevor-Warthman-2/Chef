@@ -1,10 +1,10 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
-import dishesController from '../controllers/dishesController';
+import dishesController from './dishes-controller';
 import {
   createDishBodySchema, deleteDishParamsSchema, indexDishRecipesParamsSchema, indexDishRecipesQuerySchema, indexDishesQuerySchema, showDishParamsSchema, updateDishParamsSchema,
-} from '../schemas/dishSchemas';
-import { requireAuthenticated } from '../middleware/authentication';
+} from './dish-schemas';
+import { requireAuthenticated } from '../../middleware/authentication';
 
 const router = express.Router();
 /**

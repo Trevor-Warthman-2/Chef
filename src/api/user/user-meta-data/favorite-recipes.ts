@@ -1,6 +1,6 @@
 import express from 'express';
 import { requiresAuth } from 'express-openid-connect';
-import favoriteRecipesController from '../../../controllers/favoriteRecipesController';
+import favoriteRecipesController from '../../favorite-recipes/favorite-recipes-controller';
 
 const router = express.Router();
 

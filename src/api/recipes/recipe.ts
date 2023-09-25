@@ -1,8 +1,8 @@
 import mongoose, { Schema, Types } from 'mongoose';
 import { NotFoundError } from 'http-error-classes';
-import { StepDocument } from './step';
-import Dish from './dish';
-import { AuthorId, AuthorIdSchema } from '../randomTypes';
+import { StepDocument } from './steps/step';
+import Dish from '../dishes/dish';
+import { AuthorId, AuthorIdSchema } from '../../randomTypes';
 
 export interface RecipeDocument {
     _id: Types.ObjectId;

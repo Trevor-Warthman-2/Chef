@@ -1,6 +1,6 @@
 // import auth0ManagementApiClient from '../clients/auth0ManagementApi';
 import { NotFoundError } from 'http-error-classes';
-import { FavoriteRecipeIdsList, UserMetaDataSchema, createAuth0Client } from '../clients/auth0Client';
+import { FavoriteRecipeIdsList, UserMetaDataSchema, createAuth0Client } from '../../clients/auth0-client';
 
 export const getUsersFavoriteRecipes = async (userId: string): Promise<FavoriteRecipeIdsList> => {
   const auth0Client = createAuth0Client('read:users');

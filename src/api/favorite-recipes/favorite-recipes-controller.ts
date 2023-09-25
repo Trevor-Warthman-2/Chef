@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { NotFoundError } from 'http-error-classes';
-import { getUsersFavoriteRecipes, linkFavoriteRecipe, unlinkFavoriteRecipe } from '../services/favoriteRecipesService';
+import { getUsersFavoriteRecipes, linkFavoriteRecipe, unlinkFavoriteRecipe } from './favorite-recipes-service';
 
 const createFavoriteRecipe = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { recipeId } : { recipeId: string } = req.body;

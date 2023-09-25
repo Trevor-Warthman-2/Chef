@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from 'mongoose';
-import Recipe, { RecipeDocument } from './recipe';
-import { AuthorId, AuthorIdSchema } from '../randomTypes';
+import Recipe, { RecipeDocument } from '../recipes/recipe';
+import { AuthorId, AuthorIdSchema } from '../../randomTypes';
 
 /* export interface IDish {
     title: string;

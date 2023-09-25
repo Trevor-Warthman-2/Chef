@@ -1,7 +1,7 @@
 import {
   object, string, array, boolean, number, TypeOf,
 } from 'zod';
-import { createStepBody } from './stepSchemas';
+import { createStepBody } from './steps/step-schemas';
 
 const justIdParam = object({
   recipeId: string({

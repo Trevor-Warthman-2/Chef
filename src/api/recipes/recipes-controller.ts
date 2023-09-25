@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { NotFoundError } from 'http-error-classes';
 import Types from 'mongoose';
-import Dish from '../models/dish';
-import Recipe, { RecipeDocument } from '../models/recipe';
+import Dish from '../dishes/dish';
+import Recipe, { RecipeDocument } from './recipe';
 import {
   CreateRecipeRequestShape, DeleteRecipesRequestShape, indexMyRecipesRequestShape, ShowRecipeRequestShape, UpdateRecipesRequestShape,
-} from '../schemas/recipeSchemas';
-import { IndexDishesRequestShape } from '../schemas/dishSchemas';
-import { filterRecipes } from '../services/recipesService';
+} from './recipe-schemas';
+import { IndexDishesRequestShape } from '../dishes/dish-schemas';
+import { filterRecipes } from './recipes-service';
 
 const createRecipe = async (req: Request<CreateRecipeRequestShape>, res: Response): Promise<void> => {
   const { oidc } = req;

@@ -1,7 +1,7 @@
 import {
   object, string, number, boolean, TypeOf, array,
 } from 'zod';
-import { createIngredientBody } from './ingredientSchemas';
+import { createIngredientBody } from '../ingredients/ingredient-schemas';
 
 /**
  * @openapi

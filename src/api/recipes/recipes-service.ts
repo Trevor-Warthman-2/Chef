@@ -1,5 +1,5 @@
-import Recipe, { RecipeDocument } from '../models/recipe';
-import { RecipeSearchFilters } from '../schemas/recipeSchemas';
+import Recipe, { RecipeDocument } from './recipe';
+import { RecipeSearchFilters } from './recipe-schemas';
 
 type AllowedFilters = RecipeSearchFilters & {
   author: string;

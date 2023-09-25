@@ -1,10 +1,10 @@
 import express from 'express';
 import { validateRequest } from 'zod-express-middleware';
-import recipesController from '../controllers/recipesController';
+import recipesController from './recipes-controller';
 import {
   createRecipeBodySchema, createRecipeParamsSchema, deleteRecipeParamsSchema, indexRecipesQuerySchema, showRecipeParamsSchema, updateRecipeParamsSchema,
-} from '../schemas/recipeSchemas';
-import { requireAuthenticated } from '../middleware/authentication';
+} from './recipe-schemas';
+import { requireAuthenticated } from '../../middleware/authentication';
 
 const router = express.Router();
 /**

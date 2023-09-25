@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import Ingredient, { IngredientDocument } from './ingredient';
+import Ingredient, { IngredientDocument } from '../ingredients/ingredient';
 
 export interface StepDocument {
     order: number;

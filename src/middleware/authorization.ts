@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
-import { auth0ManagementApiBaseUrl } from '../config/authConfig';
+import { auth0ManagementApiBaseUrl } from '../config/auth-config';
 
 const userHasPermission = async (userId: string, permission: string) => {
   console.log(`${auth0ManagementApiBaseUrl}/users/${userId}/permissions`);
