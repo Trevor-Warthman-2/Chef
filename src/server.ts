@@ -4,15 +4,15 @@ import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import { HttpError } from 'http-error-classes';
 import { auth } from 'express-openid-connect';
+import userRoutes from './api/user/user-routes';
 import { config } from './config/config';
 import Logging from './library/logging';
-import basicRoutes from './routes/basicRoutes';
-import dishRoutes from './routes/dishRoutes';
-import recipeRoutes from './routes/recipeRoutes';
-import userRoutes from './routes/user/userRoutes';
-import AUTH_CONFIG from './config/authConfig';
+import authRoutes from './api/auth/auth-routes';
+import dishRoutes from './api/dishes/dish-routes';
+import recipeRoutes from './api/recipes/recipe-routes';
+import AUTH_CONFIG from './config/auth-config';
 // import { OpenidRequest } from 'express-openid-connect';
-import { swaggerSpec } from './config/swaggerConfig';
+import { swaggerSpec } from './config/swagger-config';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 
@@ -68,7 +68,7 @@ const StartServer = (): void => {
 
   /** Routes */
 
-  router.use('/', basicRoutes);
+  router.use('/', authRoutes);
   router.use('/users', userRoutes);
   router.use('/dishes', dishRoutes);
   router.use('/', recipeRoutes);
